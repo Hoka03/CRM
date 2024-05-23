@@ -1,5 +1,8 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,7 +26,7 @@ INSTALLED_APPS += [
     'apps.attendances.apps.AttendancesConfig',
     'apps.exams.apps.ExamsConfig',
     'apps.general.apps.GeneralConfig',
-    'apps.groups.apps.GroupsConfig',
+    'apps.groups.apps.StudentGroupsConfig',
     'apps.lessons.apps.LessonsConfig',
     'apps.notices.apps.NoticesConfig',
     'apps.payments.apps.PaymentsConfig',
@@ -89,9 +92,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'static']
 
-MEDIA_URL = 'media'
+MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR / 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

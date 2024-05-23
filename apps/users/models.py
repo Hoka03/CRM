@@ -4,37 +4,41 @@ from django.contrib.auth.models import AbstractUser
 from apps.general.validations import phone_validate
 from apps.users.managers import CustomUserManager
 from apps.general.services import normalize_text
-from apps.subjects.models import Subject
 
 
 class CustomUser(AbstractUser):
     class RoleChoices(models.TextChoices):
-        ADMIN = 'admin', 'admin'
-        TEACHER = 'teacher', 'teacher'
-        STUDENT = 'student', 'student'
-        PARENTS = 'parents', 'parents'
+        ADMIN = 1, 'admin'
+        TEACHER = 2, 'teacher'
+        STUDENT = 3, 'student'
+        PARENT = 4, 'parent'
 
     class GenderChoices(models.TextChoices):
-        MALE = 'male', 'male'
-        FEMALE = 'female', 'female'
+        MALE = 1, 'male'
+        FEMALE = 2, 'female'
 
     USERNAME = None
 
-    objects = CustomUserManager
+    objects = CustomUserManager()
 
-    role = models.CharField(max_length=10, choices=RoleChoices.choices)
-    gender = models.CharField(max_length=50, choices=GenderChoices.choices)
+    role = models.PositiveSmallIntegerField(choices=RoleChoices.choices)
+    gender = models.PositiveSmallIntegerField(choices=GenderChoices.choices)
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
     father_name = models.CharField(max_length=150)
-    mother_name = models.CharField(max_length=150)
-    date_of_birth = models.DateTimeField()
+    mother_name = models.CharField(max_length=150, blank=True)
+    date_of_birth = models.DateField()
     religion = models.CharField(max_length=150)
     joining_data = models.DateField(auto_now_add=True)
-    email = models.EmailField(max_length=150)
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    group = models.ForeignKey('groups.Group', on_delete=models.CASCADE, related_name='user_group')
-    section = models.CharField(max_length=100)
+    email = models.EmailField(unique=True)
+    # SALARY ADD, WHEN TEACHER WAS CREATED
+    salary = models.DecimalField(max_digits=20, decimal_places=2, default=0,
+                                 help_text='Add in UZS')
+    # GROUP ADD, WHEN STUDENT WAS CREATED
+    student_group = models.ForeignKey('groups.StudentGroup', on_delete=models.CASCADE, related_name='user_group',
+                                      blank=True, null=True)
+    # CHILD ADD, WHEN PARENT WAS CREATED
+    child = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
     phone_number = models.CharField(max_length=13, validators=[phone_validate], unique=True)
     address = models.CharField(max_length=150)
 
@@ -42,8 +46,10 @@ class CustomUser(AbstractUser):
         return self.role
 
     USERNAME_FIELD = 'phone_number'
+    REQUIRED_FIELDS = ['role', 'email', 'first_name', 'last_name']
 
-    def get_normalize_fields(self):
+    @classmethod
+    def get_normalize_fields(cls):
         return [
             'first_name'
             'last_name'

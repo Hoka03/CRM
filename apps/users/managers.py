@@ -6,7 +6,7 @@ class CustomUserManager(UserManager):
     def _create_user(self, phone_number, email, password, **extra_fields):
         phone_number = self.phone_number(phone_number)
         email = self.email(email)
-        user = self.model(phone_number=phone_number, email=email **extra_fields)
+        user = self.model(phone_number=phone_number, email=email, **extra_fields)
         user.password = make_password(password)
         user.save(using=self._db)
         return user
@@ -26,3 +26,14 @@ class CustomUserManager(UserManager):
             raise ValueError("Superuser must have is_superuser=True.")
 
         return self._create_user(phone_number, email, password, **extra_fields)
+
+    @classmethod
+    def normalize_email(cls, email):
+        email = email or ""
+        try:
+            email_name, domain_part = email.strip().rsplit("@", 1)
+        except ValueError:
+            pass
+        else:
+            email = email_name + "@" + domain_part.lower()
+        return email

@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-from apps.groups.models import Group
+from apps.groups.models import StudentGroup
 from apps.subjects.models import Subject
 from apps.users.models import CustomUser
 
@@ -22,21 +22,21 @@ class Exam(models.Model):
         December = 12, 'December'
 
     month = models.PositiveSmallIntegerField(choices=MonthChoice.choices, help_text='select the month')
-    group = models.ForeignKey(Group, on_delete=models.PROTECT)
-    subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
-    limit_hour = models.TimeField(help_text='Time limit for the event')
+    student_group = models.ForeignKey(StudentGroup, on_delete=models.PROTECT)
+    subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, null=True)
+    limit_hour = models.PositiveSmallIntegerField(help_text='Time limit for the event')
 
     def __str__(self):
-        return self.group
+        return self.student_group
 
 
 class ExamResult(models.Model):
-    student = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
-    percent = models.DecimalField(max_digits=5, decimal_places=2, validators=[MinValueValidator(0),
-                                                                              MaxValueValidator(100)],
-                                  help_text='Enter a percentage value between 0 and 100')
-    comment = models.TextField(max_length=1500)
+    student = models.ForeignKey(CustomUser, limit_choices_to=CustomUser.RoleChoices.STUDENT.value,
+                                on_delete=models.PROTECT)
+    exam = models.ForeignKey(Exam, on_delete=models.SET_NULL, null=True)
+    percent = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)],
+                                help_text='Enter a percentage value between 0 and 100')
+    comment = models.TextField(max_length=1500, blank=True)
 
     def __str__(self):
         return self.student

@@ -1,3 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
+from apps.attendances.models import Attendance
+
+
+@admin.register(Attendance)
+class AttendanceAdmin(admin.ModelAdmin):
+    list_display = ('student', 'attendance_date', 'status', 'reason')
+    list_display_links = list_display
+    list_select_related = ['student', 'attendance_date']

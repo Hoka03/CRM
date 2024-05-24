@@ -1,8 +1,10 @@
-from config.settings.base import BASE_DIR
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'school_db',
+        'USER': 'oybek',
+        'PASSWORD': 'qwerty',
+        'HOST': 'localhost',
+        'PORT': 5432
     }
 }

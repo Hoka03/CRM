@@ -4,6 +4,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from apps.groups.models import StudentGroup
 from apps.subjects.models import Subject
 from apps.users.models import CustomUser
+from apps.general.services import normalize_text
 
 
 class Exam(models.Model):
@@ -40,3 +41,11 @@ class ExamResult(models.Model):
 
     def __str__(self):
         return self.student
+
+    @classmethod
+    def get_normalize_fields(cls):
+        return ['comment']
+
+    def save(self, *args, **kwargs):
+        normalize_text(self)
+        super().save(*args, **kwargs)

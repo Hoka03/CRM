@@ -1,5 +1,7 @@
 from django.db import models
 
+from apps.general.services import normalize_text
+
 
 class Subject(models.Model):
     name = models.CharField(max_length=150)
@@ -20,3 +22,11 @@ class Resource(models.Model):
 
     def __str__(self):
         return self.name
+
+    @classmethod
+    def get_normalize_fields(cls):
+        return ['name', 'author']
+
+    def save(self, *args, **kwargs):
+        normalize_text(self)
+        super().save(*args, **kwargs)

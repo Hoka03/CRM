@@ -24,3 +24,5 @@ class StudentGroup(models.Model): # VALIDATE FOR TIME
 
     def __str__(self):
         return self.teacher
+
+

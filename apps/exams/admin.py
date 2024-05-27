@@ -5,7 +5,7 @@ from apps.exams.models import Exam, ExamResult
 
 @admin.register(Exam)
 class ExamAdmin(admin.ModelAdmin):
-    list_display = ('month', 'student_group', 'subject', 'limit_hour')
+    list_display = ('subject', 'nth_month', 'limit_hour')
     list_display_links = list_display
 
 

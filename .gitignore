@@ -86,7 +86,9 @@ pycache/
 local_settings.py
 
 migrations/0*
-media
+*/migrations/0*
 
+media
+database.py/
 .env
 db.sqlite3

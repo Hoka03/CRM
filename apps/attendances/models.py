@@ -13,13 +13,13 @@ class Attendance(models.Model):
                                 on_delete=models.CASCADE)
     attendance_date = models.DateField()
     status = models.PositiveSmallIntegerField(choices=StatusChoice.choices)
-    reason = models.CharField(max_length=150)
+    reason = models.CharField(max_length=150, blank=True)
 
     class Meta:
         unique_together = ('student', 'attendance_date')
 
     def __str__(self):
-        return f'{self.student} on {self.attendance_date}'
+        return f'{self.student}'
 
     @classmethod
     def get_normalize_text(cls):

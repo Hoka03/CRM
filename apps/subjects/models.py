@@ -6,7 +6,7 @@ from apps.general.services import normalize_text
 class Subject(models.Model):
     name = models.CharField(max_length=150)
     slug = models.SlugField(max_length=150, unique=True)
-    price = models.DecimalField(max_digits=20, decimal_places=2, help_text='Add in UZS')
+    price = models.DecimalField(max_digits=20, decimal_places=2, help_text='Add in UZS', default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

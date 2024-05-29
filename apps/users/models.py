@@ -23,7 +23,7 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'phone_number'
-    REQUIRED_FIELDS = ['role', 'email']
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
     role = models.PositiveSmallIntegerField(choices=RoleChoices.choices)
     gender = models.PositiveSmallIntegerField(choices=GenderChoices.choices, blank=True, null=True)

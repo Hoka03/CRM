@@ -1,3 +1,11 @@
 from django.shortcuts import render
 
-# Create your views here.
+from apps.subjects.models import Subject
+
+
+def home(request):
+    subs = Subject.objects.all()
+    context = {
+        'subs': subs
+    }
+    return render(request, 'index.html', context)

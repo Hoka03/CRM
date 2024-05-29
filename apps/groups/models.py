@@ -2,13 +2,14 @@ from django.db import models
 from django.db.models import Q
 from django.contrib.postgres.fields import ArrayField
 from django.core.validators import ValidationError
+from django.conf import settings
 
 from apps.users.models import CustomUser
 from apps.general.enums.weeks import WeekDay
 
 
 class StudentGroup(models.Model):
-    teacher = models.ForeignKey('users.CustomUser', limit_choices_to={'role': CustomUser.RoleChoices.TEACHER.value},
+    teacher = models.ForeignKey(settings.AUTH_USER_MODEL, limit_choices_to={'role': CustomUser.RoleChoices.TEACHER.value},
                                 on_delete=models.PROTECT, related_name='teacher_groups')
     subject = models.ForeignKey('subjects.Subject', on_delete=models.PROTECT, related_name='subject_groups')
     start_time = models.TimeField()

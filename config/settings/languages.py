@@ -13,6 +13,6 @@ MODELTRANSLATION_LANGUAGES = ('en', 'ru', 'uz')
 
 USE_I18N = True
 
-# LOCALE_PATH = [
-#     settings.BASER_DIR / 'locale',
-# ]
+LOCALE_PATHS = [
+    settings.BASE_DIR / 'locale',
+]

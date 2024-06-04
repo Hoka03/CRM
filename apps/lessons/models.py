@@ -1,5 +1,5 @@
 from django.db import models
-from ckeditor_uploader.fields import RichTextUploadingField
+from django_ckeditor_5.fields import CKEditor5Field
 
 from apps.subjects.models import Subject
 
@@ -7,8 +7,8 @@ from apps.subjects.models import Subject
 class Lesson(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     title = models.CharField(max_length=150)
-    ordering_number = models.CharField(max_length=150)
-    content = RichTextUploadingField(config_name='design')
+    ordering_number = models.PositiveSmallIntegerField(default=1)
+    content = CKEditor5Field('content', config_name='extends')
 
     def __str__(self):
         return self.title

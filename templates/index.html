@@ -23,8 +23,16 @@ LANGUAGE
     <input type="submit" value="Go">
 </form>
 
+<h1>{% translate 'salom' %}</h1>
+<h2>{{ lng }}</h2>
 
-<h2>Hello</h2>
 
+{% for subject in subjects %}
+<p>{{ subject }}</p>
+{% endfor %}
+
+{% for i in salom %}
+<p>{{ i }}</p>
+{% endfor %}
 </body>
 </html>

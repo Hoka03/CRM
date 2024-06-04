@@ -1,8 +1,10 @@
+import datetime
 from django.db import models
 from django.db.models import Q
 from django.contrib.postgres.fields import ArrayField
 from django.core.validators import ValidationError
 from django.conf import settings
+
 
 from apps.users.models import CustomUser
 from apps.general.enums.weeks import WeekDay
@@ -29,6 +31,6 @@ class StudentGroup(models.Model):
             raise ValidationError(f'{self.teacher}`s have not time between {self.start_time}, {self.end_time}')
 
     def __str__(self):
-        return self.teacher
+        return 'self.teacher'
 
 

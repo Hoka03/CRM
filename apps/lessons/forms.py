@@ -1,12 +1,21 @@
 from django import forms
-from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
-from apps.lessons.models import Lesson
+from django_ckeditor_5.widgets import CKEditor5Widget
+from .models import Lesson
 
 
 class LessonForm(forms.ModelForm):
-    content = forms.CharField(widget=CKEditorUploadingWidget(config_name='design'))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["text"].required = False
 
     class Meta:
         model = Lesson
-        fields = 'content'
+        fields = ("content",)
+        widgets = {
+            "text": CKEditor5Widget(
+                attrs={"class": "django_ckeditor_5"}, config_name="lesson"
+            )
+        }
+

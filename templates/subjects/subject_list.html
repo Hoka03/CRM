@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+{% for i in subject %}
+    <a href="{% url 'subject_detail' i.pk %}"><h2>{{ i }}</h2></a>
+{% endfor %}
+</body>
+</html>

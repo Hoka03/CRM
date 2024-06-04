@@ -5,6 +5,14 @@ from apps.users.models import CustomUser
 
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
-    list_display = ('role', 'gender', 'first_name', 'last_name', 'date_of_birth', 'date_joined', 'email',
+    list_display = ('role', 'gender', 'first_name', 'last_name', 'father_name', 'mother_name', 'date_of_birth',
+                    'date_joined', 'email',
                     'phone_number', 'address')
+
     list_display_links = list_display
+
+    readonly_fields = ['date_joined', 'last_login']
+
+    fieldsets = [('Name', {'fields': ['first_name', 'last_name', 'email', 'father_name', 'mother_name']}),
+                 ('Auth', {'fields': ['role', 'gender', 'student_group', 'date_of_birth', 'date_joined', 'phone_number',
+                                      'address']})]

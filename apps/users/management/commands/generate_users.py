@@ -1,7 +1,6 @@
 from django.core.management import BaseCommand
 from django.utils import timezone
 from apps.users.models import CustomUser
-from django.utils.text import slugify
 
 
 class Command(BaseCommand):
@@ -12,11 +11,10 @@ class Command(BaseCommand):
 
         users = [
             CustomUser(
-                username=slugify('Abraham Lincoln'),
-                role=CustomUser.RoleChoices.ADMIN,
+                role=CustomUser.RoleChoices.ADMIN.value,
                 phone_number='+998999639865',
                 email='admin1@dd.com',
-                gender=CustomUser.GenderChoices.MALE,
+                gender=CustomUser.GenderChoices.MALE.value,
                 first_name='Abraham',
                 last_name='Lincoln',
                 father_name='Henry Morgan',
@@ -25,11 +23,10 @@ class Command(BaseCommand):
             ),
 
             CustomUser(
-                username=slugify('Edna Francis'),
-                role=CustomUser.RoleChoices.TEACHER,
+                role=CustomUser.RoleChoices.TEACHER.value,
                 phone_number='+998904561263',
                 email='teacher1@dd.com',
-                gender=CustomUser.GenderChoices.FEMALE,
+                gender=CustomUser.GenderChoices.FEMALE.value,
                 first_name='Edna',
                 last_name='Francis',
                 father_name='Edward S.',
@@ -38,11 +35,10 @@ class Command(BaseCommand):
             ),
 
             CustomUser(
-                username=slugify('Robert Hooke'),
-                role=CustomUser.RoleChoices.STUDENT,
+                role=CustomUser.RoleChoices.STUDENT.value,
                 phone_number='+998978526341',
                 email='student1@dd.com',
-                gender=CustomUser.GenderChoices.MALE,
+                gender=CustomUser.GenderChoices.MALE.value,
                 first_name='Robert',
                 last_name='Hooke',
                 father_name='Edward S.',

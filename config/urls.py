@@ -18,6 +18,8 @@ urlpatterns = [
     path('set-lang/', set_language, name='set_language'),
     path('i18n/', include('django.conf.urls.i18n')),
 
+    path('subjects/', include('apps.subjects.urls')),
+
     path("__debug__/", include("debug_toolbar.urls")),
     path('ckeditor5/', include('django_ckeditor_5.urls')),
 ]

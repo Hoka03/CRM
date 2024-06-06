@@ -1,9 +1,9 @@
 from django.urls import path
 
-from .views import home, SubjectListView, DetailView
+from .views import SubjectListView, SubjectFormView
 
 urlpatterns = [
-    # path('', home, name='home'),
-    path('', SubjectListView.as_view(), name='home'),
-    path('<int:pk>/', DetailView.as_view(), name='subject_detail'),
+    # path('', SubjectListView.as_view(), name='home'),
+    path('', SubjectFormView.as_view(), name='home'),
+    path('success/', SubjectListView.as_view(template_name='subject_success.html'), name='subject_success')
 ]

@@ -18,7 +18,7 @@ class CustomUser(AbstractUser):
         MALE = 1, 'male'
         FEMALE = 2, 'female'
 
-    USERNAME = None
+    username = None
 
     objects = CustomUserManager()
 

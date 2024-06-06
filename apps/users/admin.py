@@ -13,6 +13,11 @@ class CustomUserAdmin(admin.ModelAdmin):
 
     readonly_fields = ['date_joined', 'last_login']
 
-    fieldsets = [('Name', {'fields': ['first_name', 'last_name', 'email', 'father_name', 'mother_name']}),
-                 ('Auth', {'fields': ['role', 'gender', 'student_group', 'date_of_birth', 'date_joined', 'phone_number',
-                                      'address']})]
+    # fieldsets = [('Name', {'fields': ['first_name', 'last_name', 'email', 'father_name', 'mother_name']}),
+    #              ('Auth', {'fields': ['role', 'gender', 'student_group', 'date_of_birth', 'date_joined', 'phone_number',
+    #                                   'address']})]
+
+    def save_model(self, request, obj, form, change):
+        # if not obj.pk or not obj.check_password(obj.password):
+        #     obj.set_password(obj.password)
+        obj.save()

@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+    <!-- Login Page Start Here -->
+    <div class="login-page-wrap">
+        <div class="login-page-content">
+            <div class="login-box">
+                <div class="item-logo">
+                    <img src="{% static 'img/logo2.png' %}" alt="logo">
+                </div>
+                <div>SUCCESS LOGOUT</div>
+                <div class="login-social">
+                    <p>or sign in with</p>
+                    <ul>
+                        <li><a href="#" class="bg-fb"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#" class="bg-twitter"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#" class="bg-gplus"><i class="fab fa-google-plus-g"></i></a></li>
+                        <li><a href="#" class="bg-git"><i class="fab fa-github"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="sign-up">Don't have an account ? <a href="#">Signup now!</a></div>
+        </div>
+    </div>
+    <!-- Login Page End Here -->
+
+{% endblock content %}

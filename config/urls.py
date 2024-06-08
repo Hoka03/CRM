@@ -14,11 +14,9 @@ def set_language(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('i18n/', include('django.conf.urls.i18n')),
     path('set-lang/', set_language, name='set_language'),
     path('i18n/', include('django.conf.urls.i18n')),
 
-    path('subjects/', include('apps.subjects.urls')),
 
     path("__debug__/", include("debug_toolbar.urls")),
     path('ckeditor5/', include('django_ckeditor_5.urls')),
@@ -28,6 +26,6 @@ urlpatterns = [
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += i18n_patterns(
-    path('', include('apps.subjects.urls')),
-
+    path('', include('apps.general.urls')),
+    path('users/', include('apps.users.urls')),
 )

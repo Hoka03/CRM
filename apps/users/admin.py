@@ -18,6 +18,6 @@ class CustomUserAdmin(admin.ModelAdmin):
     #                                   'address']})]
 
     def save_model(self, request, obj, form, change):
-        # if not obj.pk or not obj.check_password(obj.password):
-        #     obj.set_password(obj.password)
+        if not obj.pk or not obj.check_password(obj.password):
+            obj.set_password(obj.password)
         obj.save()

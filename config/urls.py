@@ -26,8 +26,7 @@ urlpatterns = [
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += i18n_patterns(
-    path('', include('apps.general.urls')),
-    path('users/', include('apps.users.urls')),
+    path('', include('apps.users.urls')),
     path('attendances/', include('apps.attendances.urls')),
     path('exams/', include('apps.exams.urls')),
     # path('general/', include('apps.general.urls')),

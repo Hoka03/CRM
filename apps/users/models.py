@@ -70,8 +70,4 @@ class CustomUser(AbstractUser):
     def get_normalize_fields(cls):
         return ['first_name', 'last_name', 'father_name', 'mother_name']
 
-    # def save(self, *args, **kwargs):
-    #     normalize_text(self)
-    #     super().save(*args, **kwargs)
-
 

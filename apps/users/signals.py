@@ -12,6 +12,6 @@ def pre_save_user(instance, *args, **kwargs):
     normalize_text(instance)
 
 
-@receiver(post_delete, sender=CustomUser)
-def delete_photo_on_delete_user(instance, *args, **kwargs):
-    os.remove(instance.photo.path)
+# @receiver(post_delete, sender=CustomUser)
+# def delete_photo_on_delete_user(instance, *args, **kwargs):
+#     os.remove(instance.photo.path)

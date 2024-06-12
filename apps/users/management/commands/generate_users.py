@@ -11,9 +11,9 @@ class Command(BaseCommand):
 
         users = [
             CustomUser(
-                role=CustomUser.RoleChoices.ADMIN.value,
+                role=CustomUser.RoleChoices.PARENT.value,
                 phone_number='+998999639865',
-                email='admin1@dd.com',
+                email='parent1@dd.com',
                 gender=CustomUser.GenderChoices.MALE.value,
                 first_name='Abraham',
                 last_name='Lincoln',
@@ -46,5 +46,5 @@ class Command(BaseCommand):
                 address=' Isle of Wight',
             ),
         ]
-        CustomUser.objects.create_user(users)
+        CustomUser.objects.bulk_create(users)
         self.stdout.write(self.style.SUCCESS(f'{len(users)} users were created.'))

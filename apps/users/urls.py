@@ -2,8 +2,9 @@ from django.urls import path
 
 from .views import (UserLoginView, UserLogoutView, AccountTemplateView, ParentTemplateView, ParentDetailTemplateView,
                     AddParentTemplateView, TeacherTemplateView, TeacherDetailView, AddTeacherTemplateView,
-                    TeacherPaymentTemplateView, StudentTemplateView, AddStudentTemplateView,
-                    StudentPromotionTemplateView)
+                    TeacherPaymentTemplateView, StudentTemplateView, StudentRegisterView,
+                    StudentPromotionTemplateView, StudentDashboardTemplateView, ParentDashboardTemplateView,
+                    TeacherDashboardTemplateView, AdminDashboardTemplateView)
 
 
 urlpatterns = [
@@ -21,6 +22,11 @@ urlpatterns = [
     path('teacher-payment-page/', TeacherPaymentTemplateView.as_view(), name='teacher_payment_page'),
     #For Students
     path('student-page/', StudentTemplateView.as_view(), name='student_page'),
-    path('add-student-page/', AddStudentTemplateView.as_view(), name='add_student_page'),
+    path('add-student-page/', StudentRegisterView.as_view(), name='add_student_page'),
     path('student-promotion-page/', StudentPromotionTemplateView.as_view(), name='student_promotion_page'),
+    #Dashboards
+    path('', AdminDashboardTemplateView.as_view(), name='admin_dashboard_page'),
+    path('student-dashboard-page/', StudentDashboardTemplateView.as_view(), name='student_dashboard_page'),
+    path('parent-dashboard-page/', ParentDashboardTemplateView.as_view(), name='parent_dashboard_page'),
+    path('teacher-dashboard-page/', TeacherDashboardTemplateView.as_view(), name='teacher_dashboard_page'),
 ]

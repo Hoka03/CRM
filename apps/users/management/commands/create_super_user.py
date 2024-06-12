@@ -7,10 +7,10 @@ from django.utils.timezone import now
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        password = input('password: ')
         while True:
             email = input('email: ')
             phone_number = input('phone_number: ')
+            password = input('password: ')
             if not CustomUser.objects.filter(Q(email=email) | Q(phone_number=phone_number)).exists():
                 break
             self.stdout.write(self.style.ERROR(f"Username '{email}',"

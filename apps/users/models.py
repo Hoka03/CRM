@@ -48,6 +48,7 @@ class CustomUser(AbstractUser):
     child = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
     phone_number = models.CharField(max_length=13, validators=[phone_validate], unique=True)
     address = models.CharField(max_length=150)
+    description = models.TextField(max_length=2000)
 
     def clean(self):
         #   FOR TEACHER

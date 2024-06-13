@@ -1,0 +1,53 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+<div class="dashboard-content-one">
+    <!-- Breadcubs Area Start Here -->
+    <div class="breadcrumbs-area">
+        <h3>Parents</h3>
+        <ul>
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+            <li>Add New Parents</li>
+        </ul>
+    </div>
+    <!-- Breadcubs Area End Here -->
+    <!-- Add New Teacher Area Start Here -->
+    <div class="card height-auto">
+        <div class="card-body">
+            <div class="heading-layout1">
+                <div class="item-title">
+                    <h3>Add New Parents</h3>
+                </div>
+                <div class="dropdown">
+                    <a class="dropdown-toggle" href="#" role="button"
+                       data-toggle="dropdown" aria-expanded="false">...</a>
+                </div>
+            </div>
+            <form class="new-added-form" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    {% for field in form %}
+                    {% if field.name == 'role' %}
+                    <input type="hidden" name="role" value="4">
+                    {% else %}
+                    <div class="col-xl-3 col-lg-6 col-12 form-group">
+                        <label>{{ field.label }}</label>
+                        <input type="{{ field.field.widget.input_type }}" name="field.name" placeholder=""
+                               class="form-control">
+                        {{ field.errors }}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    <div class="col-12 form-group mg-t-8">
+                        <button type="submit" class="btn-fill-lg btn-gradient-yellow btn-hover-bluedark">Save</button>
+                        <button type="reset" class="btn-fill-lg bg-blue-dark btn-hover-yellow">Reset</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Add New Teacher Area End Here -->
+</div>
+{% endblock content %}

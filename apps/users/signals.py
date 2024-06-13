@@ -1,6 +1,8 @@
 import os
 from django.dispatch import receiver
 from django.db.models.signals import post_save, pre_save, post_init, pre_init, post_delete, pre_delete
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 
 from .models import CustomUser
 from apps.general.services import normalize_text

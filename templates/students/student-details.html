@@ -46,67 +46,49 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <p>Aliquam erat volutpat. Curabiene natis massa sedde lacu stiquen sodale 
-                                word moun taiery.Aliquam erat volutpaturabiene natis massa sedde  sodale 
-                                word moun taiery.</p>
+                                <p>{{ student.description }}</p>
                                 <div class="info-table table-responsive">
                                     <table class="table text-nowrap">
                                         <tbody>
                                             <tr>
                                                 <td>Name:</td>
-                                                <td class="font-medium text-dark-medium">Jessia Rose</td>
+                                                <td class="font-medium text-dark-medium">{{ student.get_full_name }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Gender:</td>
-                                                <td class="font-medium text-dark-medium">Female</td>
+                                                <td class="font-medium text-dark-medium">{{ student.get_gender_display }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Father Name:</td>
-                                                <td class="font-medium text-dark-medium">Steve Jones</td>
+                                                <td class="font-medium text-dark-medium">{{ student.father_name }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Mother Name:</td>
-                                                <td class="font-medium text-dark-medium">Naomi Rose</td>
+                                                <td class="font-medium text-dark-medium">{{ student.mother_name }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Date Of Birth:</td>
-                                                <td class="font-medium text-dark-medium">07.08.2016</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Religion:</td>
-                                                <td class="font-medium text-dark-medium">Islam</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Father Occupation:</td>
-                                                <td class="font-medium text-dark-medium">Graphic Designer</td>
+                                                <td class="font-medium text-dark-medium">{{ student.date_of_birth }}</td>
                                             </tr>
                                             <tr>
                                                 <td>E-mail:</td>
-                                                <td class="font-medium text-dark-medium">jessiarose@gmail.com</td>
+                                                <td class="font-medium text-dark-medium">{{ student.email }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Admission Date:</td>
                                                 <td class="font-medium text-dark-medium">07.08.2019</td>
                                             </tr>
                                             <tr>
-                                                <td>Class:</td>
-                                                <td class="font-medium text-dark-medium">2</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Section:</td>
-                                                <td class="font-medium text-dark-medium">Pink</td>
-                                            </tr>
-                                            <tr>
                                                 <td>Roll:</td>
-                                                <td class="font-medium text-dark-medium">10005</td>
+                                                <td class="font-medium text-dark-medium">#{{ student.id }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Address:</td>
-                                                <td class="font-medium text-dark-medium">House #10, Road #6, Australia</td>
+                                                <td class="font-medium text-dark-medium">{{ student.address }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Phone:</td>
-                                                <td class="font-medium text-dark-medium">+ 88 98568888418</td>
+                                                <td class="font-medium text-dark-medium">{{ student.phone_number }}</td>
                                             </tr>
                                         </tbody>
                                     </table>

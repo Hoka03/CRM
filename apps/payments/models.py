@@ -7,9 +7,9 @@ from apps.general.enums.months import MonthChoice
 
 class Payment(models.Model):
     student = models.ForeignKey(CustomUser, limit_choices_to={'role': CustomUser.RoleChoices.STUDENT.value},
-                                on_delete=models.PROTECT, related_name='student_payments', blank=True, null=True)
+                                on_delete=models.CASCADE, related_name='student_payments', blank=True, null=True)
     teacher = models.ForeignKey(CustomUser, limit_choices_to={'role': CustomUser.RoleChoices.TEACHER.value},
-                                on_delete=models.PROTECT, related_name='teacher_payments', blank=True, null=True)
+                                on_delete=models.CASCADE, related_name='teacher_payments', blank=True, null=True)
     year = models.PositiveIntegerField(validators=[MinValueValidator(2022), MaxValueValidator(3100)])
     month = models.PositiveIntegerField(choices=MonthChoice.choices)
     salary = models.DecimalField(max_digits=20, decimal_places=2, help_text='Add in UZS')

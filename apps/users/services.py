@@ -1,2 +1,4 @@
 def student_photo_upload_path(obj, image):
-    return f'groups/{obj.student_group.subject.name}/{obj.first_name}/photos/{image}'
+    if obj.role == 'student':
+        return f'groups/{obj.student_group.subject.name}/{obj.first_name}/photos/{image}'
+    return f'groups/{image}'

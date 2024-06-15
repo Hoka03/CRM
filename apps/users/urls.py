@@ -31,7 +31,7 @@ urlpatterns = [
     path('student-promotion-page/', StudentPromotionTemplateView.as_view(), name='student_promotion_page'),
 
     # Dashboards
-    path('', AdminDashboardTemplateView.as_view(), name='admin_dashboard_page'),
+    path('', AdminDashboardTemplateView.as_view(), name='home'),
     path('student-dashboard-page/', StudentDashboardTemplateView.as_view(), name='student_dashboard_page'),
     path('parent-dashboard-page/', ParentDashboardTemplateView.as_view(), name='parent_dashboard_page'),
     path('teacher-dashboard-page/', TeacherDashboardTemplateView.as_view(), name='teacher_dashboard_page'),

@@ -1,6 +1,13 @@
 from django.contrib import admin
+from django.contrib.auth.models import Permission
 
 from apps.users.models import CustomUser
+
+
+@admin.register(Permission)
+class PermissionAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'codename')
+    list_display_links = list_display
 
 
 @admin.register(CustomUser)
@@ -18,6 +25,6 @@ class CustomUserAdmin(admin.ModelAdmin):
     #                                   'address']})]
 
     def save_model(self, request, obj, form, change):
-        if not obj.pk or not obj.check_password(obj.password):
+        if not obj.pk or CustomUser.objects.get(pk=obj.pk).password != obj.password:
             obj.set_password(obj.password)
         obj.save()

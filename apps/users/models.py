@@ -5,9 +5,10 @@ from django.core.validators import ValidationError, MinValueValidator
 from apps.general.validations import phone_validate
 from apps.users.managers import CustomUserManager
 from .services import student_photo_upload_path
+from ..general.models import AbstractModel
 
 
-class CustomUser(AbstractUser):
+class CustomUser(AbstractUser, AbstractModel):
     class RoleChoices(models.IntegerChoices):
         ADMIN = 1, 'admin'
         TEACHER = 2, 'teacher'

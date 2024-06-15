@@ -6,9 +6,10 @@ from apps.subjects.models import Subject
 from apps.users.models import CustomUser
 from apps.general.services import normalize_text
 from apps.general.enums.months import MonthChoice
+from ..general.models import AbstractModel
 
 
-class Exam(models.Model):
+class Exam(AbstractModel):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     nth_month = models.PositiveSmallIntegerField(choices=MonthChoice.choices, help_text='select the month')
     limit_hour = models.PositiveSmallIntegerField(help_text='Time limit for the event, In hour')

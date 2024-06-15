@@ -5,10 +5,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.views.generic import CreateView, DetailView, DeleteView, ListView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView, TemplateView
-from django.shortcuts import get_object_or_404
 
 from .models import CustomUser
-from .forms import AddStudentForm
 
 
 # <=================== Login  Logout ===============>
@@ -27,11 +25,12 @@ class UserLogoutView(LoginRequiredMixin, LogoutView):
         return super().get(request, *args, **kwargs)
 
 
-class StudentDetailView(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
+class StudentDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = CustomUser
     template_name = 'students/student-details.html'
     context_object_name = 'student'
-    permission_required = ('users.view_customuser')
+    permission_required = ('users.view_student',)
+
 
 
 class AccountTemplateView(TemplateView):
@@ -104,7 +103,7 @@ class AdminRequiredMixin(UserPassesTestMixin):
             self.request.user.has_perm('apps.users.delete_CustomUser')
 
 
-class StudentRegisterView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
+class StudentRegisterView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = CustomUser
     fields = ['first_name', 'last_name', 'father_name', 'mother_name', 'date_of_birth', 'email', 'phone_number',
               'password', 'student_group', 'address', 'gender', 'photo']
@@ -120,7 +119,7 @@ class StudentRegisterView(PermissionRequiredMixin, LoginRequiredMixin, CreateVie
         return super().form_valid(form)
 
 
-class TeacherRegisterView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
+class TeacherRegisterView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = CustomUser
     fields = ['first_name', 'last_name', 'date_of_birth', 'email', 'phone_number',
               'password', 'address', 'gender', 'salary', 'photo']
@@ -136,7 +135,7 @@ class TeacherRegisterView(PermissionRequiredMixin, LoginRequiredMixin, CreateVie
         return super().form_valid(form)
 
 
-class ParentRegisterView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
+class ParentRegisterView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = CustomUser
     fields = ['first_name', 'last_name', 'date_of_birth', 'email', 'phone_number', 'password', 'address', 'gender',
               'child', 'photo',]
@@ -155,7 +154,7 @@ class ParentRegisterView(PermissionRequiredMixin, LoginRequiredMixin, CreateView
 # <================================== Delete Users ================================>
 
 
-class StudentDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
+class StudentDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = CustomUser
 
     template_name = 'delete_users/confirm_delete.html'
@@ -168,7 +167,7 @@ class StudentDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView)
 # <================================= Edit Users ===================================>
 
 
-class StudentEditView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+class StudentEditView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = CustomUser
     fields = ['first_name', 'last_name', 'father_name', 'mother_name', 'date_of_birth', 'email', 'phone_number',
               'password', 'student_group', 'address', 'gender', 'photo']

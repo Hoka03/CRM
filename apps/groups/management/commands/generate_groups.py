@@ -10,6 +10,8 @@ from apps.subjects.models import Subject
 class Command(BaseCommand):
     def handle(self, *args, **options):
         teacher = CustomUser.objects.get(first_name='Edna')
+        # second_teacher = CustomUser.objects.get(first_name='Holy')
+        # third_teacher = CustomUser.objects.get(first_name='Miya')
 
         created_time_1 = timezone.datetime(2024, 2, 10, 6, 45, 0)
         created_time_2 = timezone.datetime(2024, 4, 18, 8, 10, 10)

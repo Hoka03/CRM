@@ -4,4 +4,4 @@ from django.views.generic import TemplateView
 
 
 class AttendanceTemplateView(TemplateView):
-    template_name = 'student-attendence.html'
+    template_name = 'students/student-attendence.html'

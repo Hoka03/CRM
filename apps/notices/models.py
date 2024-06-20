@@ -49,11 +49,3 @@ class Message(models.Model):
 
     def __str__(self):
         return f'{self.message}'
-
-    @classmethod
-    def get_normalize_fields(cls):
-        return ['message']
-
-    def save(self, *args, **kwargs):
-        normalize_text(self)
-        super().save(*args, **kwargs)

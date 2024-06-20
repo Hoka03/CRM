@@ -9,7 +9,7 @@ class Command(BaseCommand):
         student_group.permissions.set([92, 88, 96, 104, 108, 112, 116, 124, 120])
 
         teacher_group = Group.objects.create(name='teacher')
-        teacher_group.permissions.set([120, 124, 118, 116, 112, 108, 104, 102, 100, 96, 93, 92, 89, 88, 85, ])
+        teacher_group.permissions.set([120, 124, 118, 116, 112, 108, 104, 102, 100, 96, 93, 92, 89, 88, 85])
 
         parent_group = Group.objects.create(name='parent')
         parent_group.permissions.set([120, 116, 112, 108, 104, 100, 96, 88])

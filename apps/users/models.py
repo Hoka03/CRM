@@ -68,8 +68,5 @@ class CustomUser(AbstractUser, AbstractModel):
     def __str__(self):
         return f"{self.get_role_display()} {self.email}"
 
-    @classmethod
-    def get_normalize_fields(cls):
-        return ['first_name', 'last_name', 'father_name', 'mother_name']
 
 

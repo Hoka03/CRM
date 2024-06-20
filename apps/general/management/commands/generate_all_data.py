@@ -12,7 +12,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('migrate'))
         os.system('python manage.py migrate')
         self.stdout.write(self.style.SUCCESS('generate_users'))
-        os.system('python manage.py generate_users')
+        os.system('python manage.py generasubjectste_users')
         self.stdout.write(self.style.SUCCESS('generate_subjects'))
         os.system('python manage.py generate_subjects')
         self.stdout.write((self.style.SUCCESS('generate_lessons')))
@@ -23,4 +23,6 @@ class Command(BaseCommand):
         os.system('python manage.py generate_exams')
         self.stdout.write((self.style.SUCCESS('generate_payments')))
         os.system('python manage.py generate_payments')
+        self.stdout.write(self.style.SUCCESS('generate_groups_users'))
+        os.system('python manage.py generate_group_users')
 

@@ -32,10 +32,4 @@ class ExamResult(models.Model):
     def __str__(self):
         return str(self.student)
 
-    @classmethod
-    def get_normalize_fields(cls):
-        return ['comment']
 
-    def save(self, *args, **kwargs):
-        normalize_text(self)
-        super().save(*args, **kwargs)

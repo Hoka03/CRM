@@ -38,7 +38,7 @@
                             </div>
                             <div class="item-content">
                                 <div class="header-inline item-header">
-                                    <h3 class="text-dark-medium font-medium">Steven Jones</h3>
+                                    <h3 class="text-dark-medium font-medium">{{ parents.first_name }}</h3>
                                     <div class="header-elements">
                                         <ul>
                                             <li><a href="#"><i class="far fa-edit"></i></a></li>
@@ -47,43 +47,33 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <p>Aliquam erat volutpat. Curabiene natis massa sedde lacu stiquen sodale 
-                                word moun taiery.Aliquam erat volutpaturabiene natis massa sedde  sodale 
-                                word moun taiery.</p>
+                                <p>parent.description</p>
                                 <div class="info-table table-responsive">
                                     <table class="table text-nowrap">
                                         <tbody>
                                             <tr>
                                                 <td>Name:</td>
-                                                <td class="font-medium text-dark-medium">Steven Jones</td>
+                                                <td class="font-medium text-dark-medium">{{ parent.get_full_name }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Gender:</td>
-                                                <td class="font-medium text-dark-medium">Male</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Occupation:</td>
-                                                <td class="font-medium text-dark-medium">Business</td>
+                                                <td class="font-medium text-dark-medium">{{ parent.get_gender_display }}</td>
                                             </tr>
                                             <tr>
                                                 <td>ID:</td>
-                                                <td class="font-medium text-dark-medium">#15059</td>
+                                                <td class="font-medium text-dark-medium">#{{ parent.id }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Address:</td>
-                                                <td class="font-medium text-dark-medium">House #10, Road #6, Australia</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Religion:</td>
-                                                <td class="font-medium text-dark-medium">Islam</td>
+                                                <td class="font-medium text-dark-medium">{{ parent.address }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Phone:</td>
-                                                <td class="font-medium text-dark-medium">+ 88 98568888418</td>
+                                                <td class="font-medium text-dark-medium">{{ parent.phone_number }}</td>
                                             </tr>
                                             <tr>
                                                 <td>E-mail:</td>
-                                                <td class="font-medium text-dark-medium">jessiarose@gmail.com</td>
+                                                <td class="font-medium text-dark-medium">{{ parent.email }}</td>
                                             </tr>
                                         </tbody>
                                     </table>

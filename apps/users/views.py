@@ -32,29 +32,38 @@ class StudentDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView)
     permission_required = ('users.view_student',)
 
 
-
 class AccountTemplateView(TemplateView):
     template_name = 'account-settings.html'
 
 
 # <====================== Parent Page ===================>
 
-class ParentTemplateView(TemplateView):
+class ParentTemplateView(ListView):
     template_name = 'parents/all-parents.html'
+    context_object_name = 'parents'
+    queryset = CustomUser.objects.filter(role=get_user_model().RoleChoices.PARENT.value)
 
 
-class ParentDetailTemplateView(TemplateView):
+class ParentDetailTemplateView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    model = CustomUser
     template_name = 'parents/parents-details.html'
-
+    context_object_name = 'teacher'
+    permission_required = ('users.view_student',)
 
 # <====================== Teacher Page ===================>
 
-class TeacherTemplateView(TemplateView):
-    template_name = 'all-teacher.html'
+
+class TeacherTemplateView(ListView):
+    template_name = 'teachers/all-teacher.html'
+    context_object_name = 'teachers'
+    queryset = CustomUser.objects.filter(role=get_user_model().RoleChoices.TEACHER.value)
 
 
-class TeacherDetailView(TemplateView):
+class TeacherDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+    model = CustomUser
     template_name = 'teachers/teacher-details.html'
+    context_object_name = 'teacher'
+    permission_required = ('users.view_customuser',)
 
 
 class TeacherPaymentTemplateView(TemplateView):
@@ -65,7 +74,7 @@ class TeacherPaymentTemplateView(TemplateView):
 class StudentTemplateView(ListView):
     template_name = 'students/all-student.html'
     context_object_name = 'students'
-    queryset = CustomUser.objects.filter(role=get_user_model().RoleChoices.STUDENT)
+    queryset = CustomUser.objects.filter(role=get_user_model().RoleChoices.STUDENT.value)
 
 
 class StudentPromotionTemplateView(TemplateView):
@@ -104,13 +113,14 @@ class AdminRequiredMixin(UserPassesTestMixin):
 
 
 class StudentRegisterView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    ''' =============================== Add students ========================================== '''
     model = CustomUser
     fields = ['first_name', 'last_name', 'father_name', 'mother_name', 'date_of_birth', 'email', 'phone_number',
               'password', 'student_group', 'address', 'gender', 'photo']
 
     template_name = 'students/admit-form.html'
 
-    permission_required = ('users.add_customuser')
+    permission_required = ('users.view_subject', 'users.view_exam', 'users.view_payment')
 
     success_url = reverse_lazy('student_page')
 
@@ -120,13 +130,14 @@ class StudentRegisterView(LoginRequiredMixin, PermissionRequiredMixin, CreateVie
 
 
 class TeacherRegisterView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    ''' =============================== Add teachers ========================================== '''
     model = CustomUser
-    fields = ['first_name', 'last_name', 'date_of_birth', 'email', 'phone_number',
+    fields = ['first_name', 'last_name', 'student_group', 'date_of_birth', 'email', 'phone_number',
               'password', 'address', 'gender', 'salary', 'photo']
 
     template_name = 'teachers/add-teacher.html'
 
-    permission_required = ('users.add_customuser')
+    permission_required = ('users.add_customuser',)
 
     success_url = reverse_lazy('teacher_page')
 
@@ -136,13 +147,14 @@ class TeacherRegisterView(LoginRequiredMixin, PermissionRequiredMixin, CreateVie
 
 
 class ParentRegisterView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    ''' =============================== Add parents ========================================== '''
     model = CustomUser
     fields = ['first_name', 'last_name', 'date_of_birth', 'email', 'phone_number', 'password', 'address', 'gender',
               'child', 'photo',]
 
     template_name = 'parents/add-parents.html'
 
-    permission_required = ('users.add_customuser')
+    permission_required = ('users.add_customuser',)
 
     success_url = reverse_lazy('parent_page')
 
@@ -157,12 +169,31 @@ class ParentRegisterView(LoginRequiredMixin, PermissionRequiredMixin, CreateView
 class StudentDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = CustomUser
 
-    template_name = 'delete_users/confirm_delete.html'
+    template_name = 'delete_users/student_delete.html'
 
-    permission_required = ('users.delete_customuser')
+    permission_required = ('users.delete_customuser',)
 
     success_url = reverse_lazy('student_page')
 
+
+class TeacherDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    model = CustomUser
+
+    template_name = 'delete_users/delete_teacher.html'
+
+    permission_required = ('users.delete_customuser',)
+
+    success_url = reverse_lazy('teacher_page')
+
+
+class ParentDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    model = CustomUser
+
+    template_name = 'delete_users/delete_parent.html'
+
+    permission_required = ('users.delete_customuser',)
+
+    success_url = reverse_lazy('parent_page')
 
 # <================================= Edit Users ===================================>
 
@@ -172,8 +203,34 @@ class StudentEditView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     fields = ['first_name', 'last_name', 'father_name', 'mother_name', 'date_of_birth', 'email', 'phone_number',
               'password', 'student_group', 'address', 'gender', 'photo']
 
-    template_name = 'edit_users/confirm_edit.html'
+    template_name = 'edit_users/student_edit.html'
 
-    permission_required = ('users.change_customuser')
+    permission_required = ('users.change_customuser',)
 
     success_url = reverse_lazy('student_page')
+
+
+class TeacherEditView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = CustomUser
+
+    fields = ['first_name', 'last_name', 'student_group', 'date_of_birth', 'email', 'phone_number',
+              'password', 'address', 'gender', 'salary', 'photo']
+
+    template_name = 'edit_users/teacher_edit.html'
+
+    permission_required = ('users.change_customuser',)
+
+    success_url = reverse_lazy('teacher_page')
+
+
+class ParentEditView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = CustomUser
+
+    fields = ['first_name', 'last_name', 'date_of_birth', 'email', 'phone_number', 'password', 'address', 'gender',
+              'child', 'photo',]
+
+    template_name = 'edit_users/parent_edit.html'
+
+    permission_required = ('users.change_customuser',)
+
+    success_url = reverse_lazy('parent_page')

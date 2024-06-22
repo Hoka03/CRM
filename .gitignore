@@ -85,7 +85,6 @@ target/
 pycache/
 local_settings.py
 
-migrations/0*
 apps/*/migrations/0*
 
 media

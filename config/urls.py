@@ -6,15 +6,8 @@ from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 
 
-def set_language(request):
-    language_code = request.POST.get('language', 'en')
-    redirect_url = request.POST.get('next', '/')
-    return redirect(request.META['HTTP_ORIGIN'] + f'/{language_code}/')
-
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('set-lang/', set_language, name='set_language'),
     path('i18n/', include('django.conf.urls.i18n')),
 
 
@@ -31,7 +24,7 @@ urlpatterns += i18n_patterns(
     path('exams/', include('apps.exams.urls')),
     # path('general/', include('apps.general.urls')),
     path('groups/', include('apps.groups.urls')),
-    # path('lessons/', include('apps.lessons.urls')),
+    path('lessons/', include('apps.lessons.urls')),
     path('notices/', include('apps.notices.urls')),
     path('payments/', include('apps.payments.urls')),
     path('subjects/', include('apps.subjects.urls'))

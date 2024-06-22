@@ -9,7 +9,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = [
+#     'ceb3-5-133-120-251.ngrok-free.app'
+# ]
+#
+# CSRF_TRUSTED_ORIGINS = [
+#     'https://ceb3-5-133-120-251.ngrok-free.app'
+# ]
 
 
 INSTALLED_APPS = [

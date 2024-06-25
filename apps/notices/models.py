@@ -37,15 +37,24 @@ class Message(models.Model):
                                 null=True, related_name='to_messages')
     message = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
-    is_viewed = models.BooleanField(default=False, blank=True, null=True)
+    is_viewed = models.BooleanField(default=False)
 
     from_user_email = models.CharField(max_length=255)
-    from_user_phone_number = models.CharField(max_length=13, validators=[phone_validate], unique=True)
+    from_user_phone_number = models.CharField(max_length=13, validators=[phone_validate])
     from_user_full_name = models.CharField(max_length=255)
 
     to_user_email = models.CharField(max_length=255)
-    to_user_phone_number = models.CharField(max_length=13, validators=[phone_validate], unique=True)
+    to_user_phone_number = models.CharField(max_length=13, validators=[phone_validate])
     to_user_full_name = models.CharField(max_length=255)
+
+    def save(self, *args, **kwargs):
+        self.from_user_email = self.from_user.email
+        self.from_user_phone_number = self.from_user.phone_number
+        self.from_user_full_name = self.from_user.get_full_name()
+        self.to_user_email = self.to_user.email
+        self.to_user_phone_number = self.to_user.phone_number
+        self.to_user_full_name = self.to_user.get_full_name()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.message}'

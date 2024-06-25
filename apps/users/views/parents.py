@@ -7,23 +7,33 @@ from django.db.models import Q
 from apps.users.models import CustomUser
 
 
-class ParentTemplateView(ListView):
+class ParentListView(ListView):
     template_name = 'parents/all-parents.html'
     context_object_name = 'parents'
 
     def get_queryset(self):
         queryset = CustomUser.objects.filter(role=get_user_model().RoleChoices.PARENT.value)
-        query = self.request.GET.get('q')
-        if query:
-            queryset = queryset.filter(
-                Q(id__icontains=query) |
-                Q(first_name__icontains=query) |
-                q(phone_number__icontains=query)
-            )
+
+        search_id = self.request.GET.get('search_id')
+        if search_id:
+            queryset = queryset.filter(id__startswith=search_id)
+
+        search_name = self.request.GET.get('search_name')
+        if search_name:
+            queryset = queryset.filter(Q(first_name__icontains=search_name)
+                                       |
+                                       Q(last_name__icontains=search_name)
+                                       |
+                                       Q(father_name__icontains=search_name))
+
+        search_phone_number = self.request.GET.get('search_phone_number')
+        if search_phone_number:
+            queryset = queryset.filter(phone_number=search_phone_number)
+
         return queryset
 
 
-class ParentDetailTemplateView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+class ParentDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = CustomUser
     template_name = 'parents/parents-details.html'
     context_object_name = 'teacher'

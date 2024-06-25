@@ -7,19 +7,29 @@ from django.db.models import Q
 from apps.users.models import CustomUser
 
 
-class TeacherTemplateView(ListView):
+class TeacherListView(ListView):
     template_name = 'teachers/all-teacher.html'
     context_object_name = 'teachers'
 
     def get_queryset(self):
         queryset = CustomUser.objects.filter(role=get_user_model().RoleChoices.TEACHER.value)
-        query = self.request.GET.get('q')
-        if query:
-            queryset = queryset.filter(
-                Q(id__icontains=query) |
-                Q(first_name__icontains=query) |
-                Q(phone_number__icontains=query)
-            )
+
+        search_id = self.request.GET.get('search_id')
+        if search_id:
+            queryset = queryset.filter(id__startswith=search_id)
+
+        search_name = self.request.GET.get('search_name')
+        if search_name:
+            queryset = queryset.filter(Q(first_name__icontains=search_name)
+                                       |
+                                       Q(last_name__icontains=search_name)
+                                       |
+                                       Q(father_name__icontains=search_name))
+
+        search_phone_number = self.request.GET.get('search_phone_number')
+        if search_phone_number:
+            queryset = queryset.filter(phone_number=search_phone_number)
+
         return queryset
 
 

@@ -1,5 +1,4 @@
 from django.views.generic import ListView
-from django.db.models import Q
 
 from .models import Lesson
 
@@ -13,12 +12,13 @@ class LessonListView(ListView):
 
     def get_queryset(self):
         queryset = Lesson.objects.all()
-        query = self.request.GET.get('q')
 
-        if query:
-            queryset = queryset.filter(
-                Q(title__icontains=query) |
-                Q(ordering_number__icontains=query)
-            )
+        search_name = self.request.GET.get('search_name')
+        if search_name:
+            queryset = queryset.filter(subject__name=search_name)
+
+        search_ordering_number = self.request.GET.get('search_ordering_number')
+        if search_ordering_number:
+            queryset = queryset.filter(ordering_number=search_ordering_number)
 
         return queryset

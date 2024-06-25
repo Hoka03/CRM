@@ -35,6 +35,8 @@ class CustomUser(AbstractUser, AbstractModel):
     date_of_birth = models.DateField(blank=True, null=True)
     email = models.EmailField(unique=True)
     photo = models.ImageField(upload_to=student_photo_upload_path, blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
 
     # SALARY ADD, WHEN TEACHER WAS CREATED
     salary = models.DecimalField(max_digits=20, decimal_places=2, default=0,

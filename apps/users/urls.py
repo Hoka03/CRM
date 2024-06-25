@@ -10,19 +10,19 @@ urlpatterns = [
     path('account-page/', views.admins.AccountTemplateView.as_view(), name='account_page'),
 
     # Parents View
-    path('parent-page/', views.parents.ParentTemplateView.as_view(), name='parent_page'),
-    path('parent-detail-page/<int:pk>/', views.parents.ParentDetailTemplateView.as_view(),
+    path('parent-page/', views.parents.ParentListView.as_view(), name='parent_page'),
+    path('parent-detail-page/<int:pk>/', views.parents.ParentDetailView.as_view(),
          name='parent_detail_page'),
     path('add-parent-page/', views.parents.ParentRegisterView.as_view(), name='add_parent_page'),
 
     # Teachers View
-    path('teacher-page/', views.teachers.TeacherTemplateView.as_view(), name='teacher_page'),
+    path('teacher-page/', views.teachers.TeacherListView.as_view(), name='teacher_page'),
     path('teacher-detail-page/<int:pk>/', views.teachers.TeacherDetailView.as_view(), name='teacher_detail_page'),
     path('add-teacher-page/', views.teachers.TeacherRegisterView.as_view(), name='add_teacher_page'),
     path('teacher-payment-page/', views.teachers.TeacherPaymentTemplateView.as_view(), name='teacher_payment_page'),
 
     # Students View
-    path('student-page/', views.students.StudentTemplateView.as_view(), name='student_page'),
+    path('student-page/', views.students.StudentListView.as_view(), name='student_page'),
     path('student-detail-page/<int:pk>/', views.students.StudentDetailView.as_view(), name='student_detail_page'),
     path('add-student-page/', views.students.StudentRegisterView.as_view(), name='add_student_page'),
     path('student-promotion-page/', views.students.StudentPromotionTemplateView.as_view(),

@@ -1,18 +1,22 @@
 from django.core.management import BaseCommand
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import Permission
+from config.settings import permissions
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        student_group_permissions = Permission.objects.filter(codename__in=permissions.STUDENT_GROUP_PERMISSIONS)
         student_group = Group.objects.create(name='student')
-        student_group.permissions.set([92, 88, 96, 104, 108, 112, 116, 124, 120])
+        student_group.permissions.set(student_group_permissions)
 
+        teacher_group_permissions = Permission.objects.filter(codename__in=permissions.TEACHER_GROUP_PERMISSIONS)
         teacher_group = Group.objects.create(name='teacher')
-        teacher_group.permissions.set([120, 124, 118, 116, 112, 108, 104, 102, 100, 96, 93, 92, 89, 88, 85])
+        teacher_group.permissions.set(teacher_group_permissions)
 
+        parent_group_permissions = Permission.objects.filter(codename__in=permissions.PARENT_GROUP_PERMISSIONS)
         parent_group = Group.objects.create(name='parent')
-        parent_group.permissions.set([120, 116, 112, 108, 104, 100, 96, 88])
+        parent_group.permissions.set(parent_group_permissions)
 
         admin_group = Group.objects.create(name='admin')
         admin_group.permissions.set(Permission.objects.all())

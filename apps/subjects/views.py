@@ -1,11 +1,10 @@
 from django.views.generic import TemplateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.db.models import Q
 
 from .models import Resource, Subject
 
 
-class SubjectTemplateView(ListView):
+class SubjectListView(ListView):
 
     template_name = 'all-subject.html'
 
@@ -13,17 +12,19 @@ class SubjectTemplateView(ListView):
 
     def get_queryset(self):
         queryset = Subject.objects.all()
-        query = self.request.GET.get('q')
 
-        if query:
-            queryset = queryset.filter(
-                Q(name__icontains=query) |
-                Q(created_at__icontains=query)
-            )
+        search_id = self.request.GET.get('search_id')
+        if search_id:
+            queryset = queryset.filter(id__startswith=search_id)
+
+        search_name = self.request.GET.get('search_name')
+        if search_name:
+            queryset = queryset.filter(name=search_name)
+
         return queryset
 
 
-class BookTemplateView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class BookListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Resource
 
     template_name = 'all-book.html'

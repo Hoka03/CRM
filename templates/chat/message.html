@@ -274,19 +274,19 @@
                         <input type="text" name="search_name" class="form-control" placeholder="Search...">
                     </div>
                     <ul class="list-unstyled chat-list mt-2 mb-0">
-                        {% for message_obj in object_list %}
-                        <a href="?chat_id={{ message_obj.id }}" style="color: inherit">
+                        {% for chat in chats %}
+                        <a href="?chat_id={{ chat.id }}" style="color: inherit">
                             <li class="clearfix active">
                                 <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
                                 <div class="about">
-                                    {% if request.user.id == message_obj.to_user_id %}
-                                    <div class="name">{{ message_obj.from_user_full_name }}</div>
-                                    <div class="name">{{ message_obj.from_user.get_role_display }}</div>
+                                    {% if request.user.id == chat.sender.id %}
+                                    <div class="name">{{ chat.recipient_full_name }}</div>
+                                    <div class="name">{{ chat.recipient.get_role_display }}</div>
                                     {% else %}
-                                    <div class="name">{{ message_obj.to_user_full_name }}</div>
-                                    <div class="name">{{ message_obj.to_user.get_role_display }}</div>
+                                    <div class="name">{{ chat.sender_full_name }}</div>
+                                    <div class="name">{{ chat.sender.get_role_display }}</div>
                                     {% endif %}
-                                    <div class="status"><i class="fa fa-circle offline"></i>{{ message_obj.created_at|date_time_to_minute }}
+                                    <div class="status"><i class="fa fa-circle offline"></i>{{ chat.messages.last.created_at|date_time_to_minute }}
                                         ago
                                     </div>
                                 </div>
@@ -295,7 +295,7 @@
                         {% endfor %}
                     </ul>
                 </div>
-
+                {% if request.GET.chat_id %}
                 <div class="chat">
                     <div class="chat-header clearfix">
                         <div class="row">
@@ -304,15 +304,15 @@
                                     <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
                                 </a>
                                 <div class="chat-about">
-                                     {% if request.user.id == message_obj.to_user_id %}
-                                        <h6 class="m-b-0">{{ chat.from_user_full_name }}</h6>
-                                        <div class="name">{{ chat.from_user_full_name }}</div>
-                                        <div class="name">{{ chat.from_user.get_role_display }}</div>
+                                    {% if request.user.id == chat_messages.last.chat.sender_id %}
+                                    <h6 class="m-b-0">{{ chat_messages.last.chat.recipient_full_name }}</h6>
                                     {% else %}
-                                        <div class="name">{{ chat.to_user_full_name }}</div>
-                                        <div class="name">{{ chat.to_user.get_role_display }}</div>
+                                    <h6 class="m-b-0">{{ chat_messages.last.chat.sender_full_name }}</h6>
                                     {% endif %}
-                                    <small>{{ chat.created_at|date_time_to_minute }} ago</small>
+                                    <small>{{ chat_messages.last.chat.created_at|date_time_to_minute }} ago</small>
+                                    {% for message in messages %}
+                                    <div>{{ message }}</div>
+                                    {% endfor %}
                                 </div>
                             </div>
                             <div class="col-lg-6 hidden-sm text-right">
@@ -330,32 +330,42 @@
                     <div class="chat-history">
 
                         <ul class="m-b-0">
+                            {% for message_chat in messages %}
+                            {% if request.user.id == message_chat.sender_id %}
                             <li class="clearfix">
                                 <div class="message-data text-right">
-                                    <span class="message-data-time">10:10 AM, Today</span>
+                                    <span class="message-data-time">{{ message_chat.created_at|date_time_to_minute }} ago</span>
                                 </div>
-                                <div class="message other-message float-right"> Hi Aiden, how are you? How is the
-                                    project coming along?
+                                <div class="message other-message float-right"> {{ message_chat.message }}
                                 </div>
                             </li>
+                            {% else %}
                             <li class="clearfix">
                                 <div class="message-data">
-                                    <span class="message-data-time">10:12 AM, Today</span>
+                                    <span class="message-data-time">{{ message_chat.created_at|date_time_to_minute }} ago</span>
                                 </div>
-                                <div class="message my-message">Are we meeting today?</div>
+                                <div class="message my-message">{{ message_chat.message }}</div>
                             </li>
-
+                            {% endif %}
+                            {% endfor %}
                         </ul>
                     </div>
                     <div class="chat-message clearfix">
-                        <div class="input-group mb-0">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-send"></i></span>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="col-xl-3 col-lg-6 col-12 form-group">
+                                <input name="content" style="width: 500px; color: gray;" type="text"
+                                       class="form-control" placeholder="Enter text here...">
+                                <div class="col-12 form-group mg-t-8" style="margin: -46px 480px;">
+                                    <button style="height: 45px;" type="submit"
+                                            class="btn-fill-lg btn-gradient-yellow btn-hover-bluedark">Send
+                                    </button>
+                                </div>
                             </div>
-                            <input type="text" class="form-control" placeholder="Enter text here...">
-                        </div>
+                        </form>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

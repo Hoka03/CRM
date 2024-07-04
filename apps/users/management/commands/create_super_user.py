@@ -9,16 +9,15 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         while True:
             email = input('email: ')
-            phone_number = input('phone_number: ')
             password = input('password: ')
-            if not CustomUser.objects.filter(Q(email=email) | Q(phone_number=phone_number)).exists():
+            if not CustomUser.objects.filter(Q(email=email)).exists():
                 break
             self.stdout.write(self.style.ERROR(f"Username '{email}',"
                                                f" already exists. Please choose a different username."))
 
         admin = CustomUser.objects.create_superuser(
             role=1,
-            phone_number=phone_number,
+            phone_number='+998999997788',
             gender=1,
             first_name='Henry',
             last_name='Morgan',

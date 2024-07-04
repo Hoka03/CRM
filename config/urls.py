@@ -7,7 +7,6 @@ from django.conf.urls.i18n import i18n_patterns
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('i18n/', include('django.conf.urls.i18n')),
 
 
@@ -19,10 +18,11 @@ urlpatterns = [
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += i18n_patterns(
+    path('admin/', admin.site.urls),
     path('', include('apps.users.urls')),
     path('attendances/', include('apps.attendances.urls')),
     path('exams/', include('apps.exams.urls')),
-    # path('general/', include('apps.general.urls')),
+    path('general/', include('apps.general.urls')),
     path('groups/', include('apps.groups.urls')),
     path('lessons/', include('apps.lessons.urls')),
     path('notices/', include('apps.notices.urls')),

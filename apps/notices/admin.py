@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.notices.models import Notification, Message
+from apps.notices.models import Notification, Chat, ChatMessage
 
 
 @admin.register(Notification)
@@ -9,9 +9,14 @@ class NotificationAdmin(admin.ModelAdmin):
     list_display_links = list_display
 
 
-@admin.register(Message)
-class MessageAdmin(admin.ModelAdmin):
-    list_display = ('from_user', 'to_user', 'message', 'from_user_email', 'to_user_email', 'from_user_phone_number',
-                    'to_user_phone_number', 'from_user_full_name', 'to_user_full_name',)
+@admin.register(Chat)
+class ChatAdmin(admin.ModelAdmin):
+    list_display = ('recipient', 'sender', 'recipient_email', 'sender_email', 'recipient_phone_number',
+                    'sender_phone_number', 'recipient_full_name', 'sender_full_name',)
     list_display_links = list_display
-    fields = ('from_user', 'to_user', 'message', 'is_viewed')
+    fields = ('recipient', 'sender')
+
+
+@admin.register(ChatMessage)
+class ChatMessageAdmin(admin.ModelAdmin):
+    list_display = ('chat', 'sender', 'message', 'created_at', 'viewed_at', 'is_viewed')

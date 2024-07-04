@@ -1,5 +1,10 @@
 <!doctype html>
 {% load static %}
+{% load i18n %}
+{% load custom_tags %}
+{% get_current_languages as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+{% get_language_info_list for LANGUAGES as languages %}
 <html class="no-js" lang="">
 
 <head>
@@ -234,12 +239,12 @@
                 </li>
                 <li class="navbar-item dropdown header-language">
                     <a class="navbar-nav-link dropdown-toggle" href="#" role="button"
-                       data-toggle="dropdown" aria-expanded="false"><i class="fas fa-globe-americas"></i>EN</a>
+                       data-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-globe-americas"></i>{{ LANGUAGE_CODE|upper }}</a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#">English</a>
-                        <a class="dropdown-item" href="#">Spanish</a>
-                        <a class="dropdown-item" href="#">Franchis</a>
-                        <a class="dropdown-item" href="#">Chiness</a>
+                        {% for language in languages %}
+                            <a class="dropdown-item" href="{% url 'set_language' language.code %}">{{ language.name_local }}</a>
+                        {% endfor %}
                     </div>
                 </li>
             </ul>

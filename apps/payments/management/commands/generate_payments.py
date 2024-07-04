@@ -13,18 +13,19 @@ class Command(BaseCommand):
         created_time_2 = timezone.datetime(2024, 4, 20, 12, 45, 10)
         created_time_3 = timezone.datetime(2024, 9, 25, 14, 55, 20)
 
-        def get_user_by_first_name(first_name):
-            try:
-                return CustomUser.objects.get(first_name=first_name).id
-            except MultipleObjectsReturned:
-                return CustomUser.objects.filter(first_name=first_name).first().id
-            except ObjectDoesNotExist:
-                self.stdout.write(self.style.ERROR(f'No user found with first name: {first_name}'))
-                return None
+        try:
+            student = CustomUser.objects.get(role=CustomUser.RoleChoices.STUDENT.value)
+            teacher = CustomUser.objects.get(role=CustomUser.RoleChoices.TEACHER.value)
+        except MultipleObjectsReturned:
+            student = CustomUser.objects.filter(role=CustomUser.RoleChoices.STUDENT.value).first()
+            teacher = CustomUser.objects.filter(role=CustomUser.RoleChoices.TEACHER.value).first()
+        except ObjectDoesNotExist:
+            self.stdout.write(self.style.ERROR('No student or teacher found in the database.'))
+            return
 
         payments = [
             Payment(
-                student_id=get_user_by_first_name("Robert"),
+                student_id=student.id,
                 year=2024,
                 month=6,
                 salary=Decimal('1200000'),
@@ -32,7 +33,7 @@ class Command(BaseCommand):
                 created_at=created_time_1
             ),
             Payment(
-                student_id=get_user_by_first_name("Holy"),
+                student_id=student.id,
                 year=2024,
                 month=2,
                 salary=Decimal('125400'),
@@ -40,7 +41,7 @@ class Command(BaseCommand):
                 created_at=created_time_2
             ),
             Payment(
-                student_id=get_user_by_first_name("Alex"),
+                student_id=student.id,
                 year=2024,
                 month=4,
                 salary=Decimal('650000'),
@@ -48,7 +49,7 @@ class Command(BaseCommand):
                 created_at=created_time_3
             ),
             Payment(
-                teacher_id=get_user_by_first_name("Edna"),
+                teacher_id=teacher.id,
                 year=2024,
                 month=4,
                 salary=Decimal('3400000'),
@@ -56,7 +57,7 @@ class Command(BaseCommand):
                 created_at=created_time_1
             ),
             Payment(
-                teacher_id=get_user_by_first_name("Holy"),
+                teacher_id=teacher.id,
                 year=2023,
                 month=6,
                 salary=Decimal('320000'),
@@ -64,7 +65,7 @@ class Command(BaseCommand):
                 created_at=created_time_2
             ),
             Payment(
-                teacher_id=get_user_by_first_name("Miya"),
+                teacher_id=teacher.id,
                 year=2024,
                 month=5,
                 salary=Decimal('654000'),
@@ -73,6 +74,5 @@ class Command(BaseCommand):
             ),
         ]
 
-        payments = [payment for payment in payments if payment.student_id or payment.teacher_id]
         Payment.objects.bulk_create(payments)
         self.stdout.write(self.style.SUCCESS(f'{len(payments)} payments were created.'))

@@ -1,0 +1,177 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+<!-- Sidebar Area End Here -->
+<div class="dashboard-content-one">
+    <!-- Breadcubs Area Start Here -->
+    <div class="breadcrumbs-area">
+        <h3>Examination</h3>
+        <ul>
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+            <li>Exam Grade</li>
+        </ul>
+    </div>
+    <!-- Breadcubs Area End Here -->
+    <div class="row">
+        <!-- Exam Grade Add Area Start Here -->
+        <div class="col-4-xxxl col-12">
+            <div class="card height-auto">
+                <div class="card-body">
+                    <div class="heading-layout1">
+                        <div class="item-title">
+                            <h3>Add New Grade</h3>
+                        </div>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                               aria-expanded="false">...</a>
+
+                        </div>
+                    </div>
+                    <!-- exam-grade-create.html -->
+                    <form class="new-added-form" method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-12-xxxl col-lg-6 col-12 form-group">
+                                <label for="id_exam">Select Exam</label>
+                                <select id="id_exam" name="exam_id" class="select2 form-control" required>
+                                    {% for exam in exams %}
+                                    <option value="{{ exam.id }}">{{ exam.subject }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-12-xxxl col-lg-6 col-12 form-group">
+                                <label for="id_student">Select Student</label>
+                                <select id="id_student" name="student_id" class="select2 form-control" required>
+                                    {% for student in students %}
+                                    <option value="{{ student.id }}">{{ student.first_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-12-xxxl col-lg-6 col-12 form-group">
+                                <label for="id_grade_point">Grade Point</label>
+                                <select id="id_grade_point" name="grade_point" class="select2" required>
+                                    <option value="">Please Select</option>
+                                    <option value="5.00">5.00</option>
+                                    <option value="4.00">4.00</option>
+                                    <option value="3.65">3.65</option>
+                                    <option value="3.50">3.50</option>
+                                    <option value="3.00">3.00</option>
+                                    <option value="2.50">2.50</option>
+                                </select>
+                            </div>
+                            <div class="col-12-xxxl col-lg-6 col-12 form-group">
+                                <label for="id_percentage">Percentage</label>
+                                <input type="number" id="id_percentage" name="percentage" placeholder="Enter percentage"
+                                       class="form-control" required>
+                            </div>
+                            <div class="col-12 form-group">
+                                <label for="id_comment">Comments</label>
+                                <textarea id="id_comment" name="comment" class="textarea form-control"
+                                          placeholder="Enter comments" cols="10" rows="4"></textarea>
+                            </div>
+                            <div class="col-12 form-group mg-t-8">
+                                <button type="submit" class="btn-fill-lg btn-gradient-yellow btn-hover-bluedark">Save
+                                </button>
+                                <button type="reset" class="btn-fill-lg bg-blue-dark btn-hover-yellow">Reset</button>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+        <!-- Exam Grade Add Area End Here -->
+        <!-- Exam Grade List Area Start Here -->
+        <div class="col-8-xxxl col-12">
+            <div class="card height-auto">
+                <div class="card-body">
+                    <div class="heading-layout1">
+                        <div class="item-title">
+                            <h3>Exam Grade Lists</h3>
+                        </div>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                               aria-expanded="false">...</a>
+
+                        </div>
+                    </div>
+                    <form class="mg-b-20">
+                        <div class="row gutters-8">
+                            <div class="col-lg-5 col-sm-4 col-12 form-group">
+                                <input type="text" name="search_name" placeholder="Search by Grade Name ..." class="form-control">
+                            </div>
+                            <div class="col-lg-5 col-sm-5 col-12 form-group">
+                                <input type="text" name="search_percent" placeholder="Search by Percent ..." class="form-control">
+                            </div>
+                            <div class="col-lg-2 col-sm-3 col-12 form-group">
+                                <button type="submit"
+                                        class="fw-btn-fill btn-gradient-yellow">SEARCH
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="table-responsive">
+                        <table class="table display data-table text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input checkAll">
+                                        <label class="form-check-label">Grade Name</label>
+                                    </div>
+                                </th>
+                                <th>Grade Point</th>
+                                <th>Student</th>
+                                <th>General Percent</th>
+                                <th>Comment</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for exam_result in exam_results %}
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input">
+                                        <label class="form-check-label">{{ exam_result.exam.subject }}</label>
+                                    </div>
+                                </td>
+                                <td>{{ exam_result.student }}</td>
+                                <td>{{ exam_result.grade_point }}</td>
+                                <td>{{ exam_result.percent }}</td>
+                                <td>{{ exam_result.comment }}</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                           aria-expanded="false">
+                                            <span class="flaticon-more-button-of-three-dots"></span>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a class="dropdown-item"
+                                               href="{% url 'exam_result_delete' exam_result.pk %}"><i
+                                                    class="fas fa-times text-orange-red"></i>Delete</a>
+                                            <a class="dropdown-item" href="#"><i
+                                                    class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Exam Grade List Area End Here -->
+    </div>
+    <!-- All Subjects Area End Here -->
+    <footer class="footer-wrap-layout1">
+        <div class="copyright">© Copyrights <a href="#">akkhor</a> 2019. All rights reserved. Designed by
+            <a href="#">PsdBosS</a></div>
+    </footer>
+</div>
+{% endblock %}

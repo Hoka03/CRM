@@ -24,41 +24,20 @@
                                         <h3>Add New Subject</h3>
                                     </div>
                                 </div>
-                                <form class="new-added-form">
+                                <form class="new-added-form" method="POST">
+                                    {% csrf_token %}
                                     <div class="row">
                                         <div class="col-12-xxxl col-lg-6 col-12 form-group">
                                             <label>Subject Name *</label>
-                                            <input type="text" placeholder="" class="form-control">
+                                                <input type="text" placeholder="" class="form-control">
                                         </div>
+
                                         <div class="col-12-xxxl col-lg-6 col-12 form-group">
-                                            <label>Subject Type *</label>
-                                            <select class="select2">
-                                                <option value="">Please Select</option>
+                                            <label>Select Price</label>
+                                            <select class="select2" name="price">
                                                 {% for subject in subjects %}
-                                                <option value="1">{{ subject }}</option>
+                                                <option value="{{ subject.price }}">{{ subject.price }}</option>
                                                 {% endfor %}
-                                                </select>
-                                        </div>
-                                        <div class="col-12-xxxl col-lg-6 col-12 form-group">
-                                            <label>Select Class *</label>
-                                            <select class="select2">
-                                                <option value="0">Please Select</option>
-                                                <option value="1">Play</option>
-                                                <option value="2">Nursery</option>
-                                                <option value="3">One</option>
-                                                <option value="3">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-12-xxxl col-lg-6 col-12 form-group">
-                                            <label>Select Code</label>
-                                            <select class="select2">
-                                                <option value="0">Please Select</option>
-                                                <option value="1">00524</option>
-                                                <option value="2">00525</option>
-                                                <option value="3">00526</option>
-                                                <option value="3">00527</option>
-                                                <option value="3">00528</option>
                                             </select>
                                         </div>
                                         <div class="col-12 form-group mg-t-8">
@@ -104,7 +83,7 @@
                                                     </div>
                                                 </th>
                                                 <th>Subject Name</th>
-<!--                                                <th>Class</th>-->
+                                                <th>Price</th>
                                                 <th>Date</th>
                                                 <th></th>
                                             </tr>
@@ -119,7 +98,7 @@
                                                     </div>
                                                 </td>
                                                 <td>{{ subject.name }}</td>
-<!--                                                <td>4</td>-->
+                                                <td>{{ subject.price }}</td>
                                                 <td>{{ subject.created_at.date }}</td>
                                                 <td>
                                                     <div class="dropdown">
@@ -128,9 +107,9 @@
                                                             <span class="flaticon-more-button-of-three-dots"></span>
                                                         </a>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fas fa-times text-orange-red"></i>Close</a>
-                                                            <a class="dropdown-item" href="#"><i
+                                                            <a class="dropdown-item" href="{% url 'subject_delete' subject.pk %}"><i
+                                                                    class="fas fa-times text-orange-red"></i>Delete</a>
+                                                            <a class="dropdown-item" href="{% url 'subject_edit' subject.pk %}"><i
                                                                     class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
                                                             <a class="dropdown-item" href="#"><i
                                                                     class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>

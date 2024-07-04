@@ -1,0 +1,191 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+{% load custom_filters %}
+<style>
+    .reason {
+        background: none repeat scroll 0 0 #F8F8F8;
+        border: 5px solid #DFDFDF;
+        color: #717171;
+        font-size: 13px;
+        height: 30px;
+        letter-spacing: 1px;
+        line-height: 30px;
+        margin: 0 auto;
+        position: relative;
+        text-align: center;
+        text-transform: uppercase;
+        top: -80px;
+        left: -30px;
+        display: none;
+        padding: 0 20px;
+    }
+
+    .reason:after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        width: 10px;
+        height: 10px;
+        border-bottom: 5px solid #DFDFDF;
+        border-right: 5px solid #DFDFDF;
+        background: #F8F8F8;
+        left: 50%;
+        margin-left: -5px;
+        -moz-transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+
+    .td:hover .reason {
+        display: block;
+    }
+
+
+</style>
+<div class="dashboard-content-one">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="heading-layout1">
+                        <div class="item-title">
+                            <h3>Student Attendence</h3>
+                        </div>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" href="#" role="button"
+                               data-toggle="dropdown" aria-expanded="false">...</a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
+                                <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                                <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="new-added-form">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-6 col-12 form-group">
+                                <label>Groups</label>
+                                <select class="select2 form-control" name="group_id">
+                                    <option value="">Select Group</option>
+                                    {% for group in groups %}
+                                    {% for i in group %}
+                                    <option value="{{ i.id }}" {% if request.GET.group_id|add:"0" == i.id %} selected {% endif %} value="{{ i.id }}">{{ i }}</option>
+                                    {% endfor %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-12 form-group">
+                                <label>Select Month</label>
+                                <select class="select2 form-control" name="month">
+                                    <option value="">Select Month</option>
+                                    <option {% if request.GET.month|add:"0" == 1 %} selected {% endif %} value="1">January</option>
+                                    <option {% if request.GET.month|add:"0" == 2 %} selected {% endif %} value="2">February</option>
+                                    <option {% if request.GET.month|add:"0" == 3 %} selected {% endif %} value="3">March</option>
+                                    <option {% if request.GET.month|add:"0" == 4 %} selected {% endif %} value="4">April</option>
+                                    <option {% if request.GET.month|add:"0" == 5 %} selected {% endif %} value="5">May</option>
+                                    <option {% if request.GET.month|add:"0" == 6 %} selected {% endif %} value="6">June</option>
+                                    <option {% if request.GET.month|add:"0" == 7 %} selected {% endif %} value="7">July</option>
+                                    <option {% if request.GET.month|add:"0" == 8 %} selected {% endif %} value="8">August</option>
+                                    <option {% if request.GET.month|add:"0" == 9 %} selected {% endif %} value="9">September</option>
+                                    <option {% if request.GET.month|add:"0" == 10 %} selected {% endif %} value="10">October</option>
+                                    <option {% if request.GET.month|add:"0" == 11 %} selected {% endif %} value="11">November</option>
+                                    <option {% if request.GET.month|add:"0" == 12 %} selected {% endif %} value="12">December</option>
+                                </select>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-12 form-group">
+                                <label>Years</label>
+                                <select class="select2 form-control" name="year">
+                                    <option value="">Select Year</option>
+                                    {% for year in years %}
+                                    <option {% if request.GET.year|add:"0" == year %} selected {% endif %} value="{{ year }}">{{ year }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-12 form-group mg-t-8">
+                                <button type="submit" class="btn-fill-lg btn-gradient-yellow btn-hover-bluedark">Save
+                                </button>
+                                <button type="reset" class="btn-fill-lg bg-blue-dark btn-hover-yellow">Reset</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Student Attendence Search Area End Here -->
+        <!-- Student Attendence Area Start Here -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="heading-layout1">
+                        <div class="item-title">
+                            <h3>Attendance {{ request.GET.group_id|get_student_group_for_id }},
+                                {{request.GET.month|normalize_month }} {{ request.GET.year }}</h3>
+                        </div>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" href="#" role="button"
+                               data-toggle="dropdown" aria-expanded="false">...</a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
+                                <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                                <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table bs-table table-striped table-bordered text-nowrap">
+                            <thead>
+                            <tr>
+                                <th class="text-left">Students</th>
+                                {% for day in days %}
+                                <th>{{ day }}</th>
+                                {% endfor %}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for student in students %}
+                            <tr>
+                                <td class="text-left">{{ student.first_name }} {{ student.last_name }}</td>
+                                {% for attendance in student.attendances %}
+                                {% if attendance.come %}
+                                <td><i class="fas fa-check text-success"></i></td>
+                                {% elif attendance.come == '' %}
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <th class="text-left">
+                                        <a style="color: inherit;" href="#" role="button" data-toggle="dropdown"
+                                           aria-expanded="false">---</a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <input type="hidden" name="day" value="{{ attendance.day }}">
+                                            <input type="hidden" name="student_id" value="{{ student.id }}">
+                                            <button type="submit" name="come" value="True"><a class="dropdown-item"><i
+                                                    class="fas fa-check text-success"></i>Came</a></button>
+                                            <button type="submit" name="come" value="False"><a class="dropdown-item"><i
+                                                    class="fas fa-times text-danger"></i>No Came</a></button>
+                                            <div style="margin: 0px;">
+                                                <input style="width: 180px;" type="text" name="reason"
+                                                       placeholder="Rezone">
+                                            </div>
+                                        </div>
+                                    </th>
+                                </form>
+                                {% else %}
+                                {% if attendance.reason != '' %}
+                                <td class="td"><i class="fas fa-times text-danger"></i><span class="reason">{{ attendance.reason }}</span>
+                                </td>
+                                {% else %}
+                                <td><i class="fas fa-times text-danger"></i></td>
+                                {% endif %}
+                                {% endif %}
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

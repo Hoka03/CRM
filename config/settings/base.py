@@ -21,6 +21,7 @@ DEBUG = True
 INSTALLED_APPS = [
     'modeltranslation',
     'jazzmin',
+    'autoslug',
 
     'django.contrib.admin',
     'django.contrib.auth',

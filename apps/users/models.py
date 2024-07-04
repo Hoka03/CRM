@@ -68,7 +68,7 @@ class CustomUser(AbstractUser, AbstractModel):
             raise ValidationError({'child': 'Child must be provided for Parent'})
 
     def __str__(self):
-        return f"{self.get_role_display()}: {self.first_name} {self.last_name}"
+        return f"{self.first_name} {self.last_name}"
 
 
 

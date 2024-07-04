@@ -19,4 +19,4 @@ class ChatAdmin(admin.ModelAdmin):
 
 @admin.register(ChatMessage)
 class ChatMessageAdmin(admin.ModelAdmin):
-    list_display = ('chat', 'sender', 'message', 'created_at', 'viewed_at', 'is_viewed')
+    list_display = ('chat', 'sender', 'message', 'created_at', 'viewed_at', 'image', 'is_viewed')

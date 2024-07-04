@@ -286,9 +286,11 @@
                                     <div class="name">{{ chat.sender_full_name }}</div>
                                     <div class="name">{{ chat.sender.get_role_display }}</div>
                                     {% endif %}
-                                    <div class="status"><i class="fa fa-circle offline"></i>{{ chat.messages.last.created_at|date_time_to_minute }}
-                                        ago
-                                    </div>
+                                    {% if chat.messages.last %}
+                                        <div class="status"><i class="fa fa-circle offline"></i>{{chat.messages.last.created_at|date_time_to_minute }}
+                                            ago
+                                        </div>
+                                    {% endif %}
                                 </div>
                             </li>
                         </a>
@@ -309,7 +311,10 @@
                                     {% else %}
                                     <h6 class="m-b-0">{{ chat_messages.last.chat.sender_full_name }}</h6>
                                     {% endif %}
-                                    <small>{{ chat_messages.last.chat.created_at|date_time_to_minute }} ago</small>
+                                    {% if chat.messages.last %}
+                                        <small>{{ chat_messages.last.chat.created_at|date_time_to_minute }}
+                                            ago</small>
+                                    {% endif %}
                                     {% for message in messages %}
                                     <div>{{ message }}</div>
                                     {% endfor %}
@@ -318,8 +323,10 @@
                             <div class="col-lg-6 hidden-sm text-right">
                                 <a href="javascript:void(0);" class="btn btn-outline-secondary"><i
                                         class="fa fa-camera"></i></a>
+
                                 <a href="javascript:void(0);" class="btn btn-outline-primary"><i
                                         class="fa fa-image"></i></a>
+
                                 <a href="javascript:void(0);" class="btn btn-outline-info"><i
                                         class="fa fa-cogs"></i></a>
                                 <a href="javascript:void(0);" class="btn btn-outline-warning"><i
@@ -330,33 +337,50 @@
                     <div class="chat-history">
 
                         <ul class="m-b-0">
-                            {% for message_chat in messages %}
+                            {% for message_chat in chat_messages %}
                             {% if request.user.id == message_chat.sender_id %}
                             <li class="clearfix">
-                                <div class="message-data text-right">
-                                    <span class="message-data-time">{{ message_chat.created_at|date_time_to_minute }} ago</span>
-                                </div>
+                                {% if message_chat.created_at %}
+                                    <div class="message-data text-right">
+                                        <span class="message-data-time">{{ message_chat.created_at|date_time_to_minute }} ago</span>
+                                    </div>
+                                {% endif %}
                                 <div class="message other-message float-right"> {{ message_chat.message }}
                                 </div>
+                                 {% if message_chat.image %}
+                                        <div class="message-image">
+                                            <img src="{{ message_chat.image.url }}" alt="message image">
+                                        </div>
+                                 {% endif %}
                             </li>
                             {% else %}
                             <li class="clearfix">
-                                <div class="message-data">
-                                    <span class="message-data-time">{{ message_chat.created_at|date_time_to_minute }} ago</span>
-                                </div>
+                                {% if message_chat.created_at %}
+                                    <div class="message-data">
+                                        <span class="message-data-time">{{ message_chat.created_at|date_time_to_minute }} ago</span>
+                                    </div>
+                                {% endif %}
                                 <div class="message my-message">{{ message_chat.message }}</div>
+                                 {% if message_chat.image %}
+                                        <div class="message-image">
+                                            <img src="{{ message_chat.image.url }}" alt="message image">
+                                        </div>
+                                 {% endif %}
                             </li>
                             {% endif %}
                             {% endfor %}
                         </ul>
                     </div>
                     <div class="chat-message clearfix">
-                        <form method="POST">
+                        <form method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="col-xl-3 col-lg-6 col-12 form-group">
-                                <input name="content" style="width: 500px; color: gray;" type="text"
+                                <input name="message" style="width: 500px; color: gray;" type="text"
                                        class="form-control" placeholder="Enter text here...">
                                 <div class="col-12 form-group mg-t-8" style="margin: -46px 480px;">
+
+                                    <label for="image">Image</label>
+                                    <input type="file" id="image" name="image">
                                     <button style="height: 45px;" type="submit"
                                             class="btn-fill-lg btn-gradient-yellow btn-hover-bluedark">Send
                                     </button>

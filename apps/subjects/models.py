@@ -1,9 +1,10 @@
 from django.db import models
+from autoslug import AutoSlugField
 
 
 class Subject(models.Model):
     name = models.CharField(max_length=150)
-    slug = models.SlugField(max_length=150, unique=True)
+    slug = AutoSlugField(populate_from='name', unique=True)
     price = models.DecimalField(max_digits=20, decimal_places=2, help_text='Add in UZS', default=0)
     description = models.TextField(max_length=1500)
     created_at = models.DateTimeField(auto_now_add=True)

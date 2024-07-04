@@ -7,13 +7,13 @@ register = template.Library()
 
 @register.filter
 def date_time_to_minute(created_at):
-    if isinstance(created_at, str):
-        if created_at.strip() == "":
-            return "Invalid date"
-        try:
-            created_at = datetime.strptime(created_at, '%Y-%m-%d %H:%M:%S')
-        except ValueError:
-            return "Invalid date"
+    # if isinstance(created_at, str):
+    #     if created_at.strip() == "":
+    #         return "Invalid date"
+    #     try:
+    #         created_at = datetime.strptime(created_at, '%Y-%m-%d %H:%M:%S')
+    #     except ValueError:
+    #         return "Invalid date"
 
     current_datetime = now() - created_at
     seconds = abs(int(current_datetime.total_seconds()))

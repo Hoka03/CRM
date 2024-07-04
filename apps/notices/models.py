@@ -68,5 +68,7 @@ class ChatMessage(models.Model):
     viewed_at = models.DateTimeField(blank=True, null=True)
     is_viewed = models.BooleanField(default=False)
 
+    image = models.ImageField(upload_to='chat/', blank=True, null=True)
+
     def __str__(self):
-        return f'{self.message}'
+        return f'{self.sender} {self.chat.id}'

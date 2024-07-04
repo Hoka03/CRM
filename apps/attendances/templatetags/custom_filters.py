@@ -1,6 +1,8 @@
+import datetime
 from django import template
 
 from apps.groups.models import StudentGroup
+
 
 register = template.Library()
 
@@ -17,7 +19,7 @@ def normalize_month(moth):
 
 
 @register.filter
-def get_student_id(group_id):
+def get_student_group_for_id(group_id):
     if not group_id.isdigit():
         return None
     group = StudentGroup.objects.get(id=group_id)

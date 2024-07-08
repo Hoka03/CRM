@@ -15,7 +15,7 @@ class Command(BaseCommand):
                 phone_number='+9989045612{}'.format(i + 50),
                 email='teacher{}@dd.com'.format(i + 150),
                 gender=CustomUser.GenderChoices.FEMALE.value,
-                first_name='Edna{i}',
+                first_name='Edna{}'.format(i + 10),
                 last_name=faker.last_name(),
                 father_name=faker.last_name(),
                 date_of_birth=faker.date_of_birth(),

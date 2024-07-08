@@ -11,19 +11,19 @@ class Command(BaseCommand):
             Exam(
                 subject_id=Subject.objects.get(name="History").id,
                 nth_month=MonthChoice.February,
-                limit_hour=2
+                limit_hour="02:00:00"
             ),
 
             Exam(
                 subject_id=Subject.objects.get(name="Physics").id,
                 nth_month=MonthChoice.March,
-                limit_hour=3
+                limit_hour="03:00:00"
             ),
 
             Exam(
                 subject_id=Subject.objects.get(name="Philosophy").id,
                 nth_month=MonthChoice.April,
-                limit_hour=2
+                limit_hour="04:00:00"
             )
         ]
         Exam.objects.bulk_create(exams)

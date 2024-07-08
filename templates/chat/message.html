@@ -280,11 +280,11 @@
                                 <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
                                 <div class="about">
                                     {% if request.user.id == chat.sender.id %}
-                                    <div class="name">{{ chat.recipient_full_name }}</div>
-                                    <div class="name">{{ chat.recipient.get_role_display }}</div>
+                                        <div class="name">{{ chat.recipient_full_name }}</div>
+                                        <div class="name">{{ chat.recipient.get_role_display }}</div>
                                     {% else %}
-                                    <div class="name">{{ chat.sender_full_name }}</div>
-                                    <div class="name">{{ chat.sender.get_role_display }}</div>
+                                        <div class="name">{{ chat.sender_full_name }}</div>
+                                        <div class="name">{{ chat.sender.get_role_display }}</div>
                                     {% endif %}
                                     {% if chat.messages.last %}
                                         <div class="status"><i class="fa fa-circle offline"></i>{{chat.messages.last.created_at|date_time_to_minute }}
@@ -307,9 +307,9 @@
                                 </a>
                                 <div class="chat-about">
                                     {% if request.user.id == chat_messages.last.chat.sender_id %}
-                                    <h6 class="m-b-0">{{ chat_messages.last.chat.recipient_full_name }}</h6>
+                                     <h6 class="m-b-0">{{ chat_messages.last.chat.recipient_full_name }}</h6>
                                     {% else %}
-                                    <h6 class="m-b-0">{{ chat_messages.last.chat.sender_full_name }}</h6>
+                                        <h6 class="m-b-0">{{ chat_messages.last.chat.sender_full_name }}</h6>
                                     {% endif %}
                                     {% if chat.messages.last %}
                                         <small>{{ chat_messages.last.chat.created_at|date_time_to_minute }}
@@ -338,36 +338,36 @@
 
                         <ul class="m-b-0">
                             {% for message_chat in chat_messages %}
-                            {% if request.user.id == message_chat.sender_id %}
-                            <li class="clearfix">
-                                {% if message_chat.created_at %}
-                                    <div class="message-data text-right">
-                                        <span class="message-data-time">{{ message_chat.created_at|date_time_to_minute }} ago</span>
-                                    </div>
-                                {% endif %}
-                                <div class="message other-message float-right"> {{ message_chat.message }}
-                                </div>
-                                 {% if message_chat.image %}
-                                        <div class="message-image">
-                                            <img src="{{ message_chat.image.url }}" alt="message image">
+                                {% if request.user.id == message_chat.sender_id %}
+                                <li class="clearfix">
+                                    {% if message_chat.created_at %}
+                                        <div class="message-data text-right">
+                                            <span class="message-data-time">{{ message_chat.created_at|date_time_to_minute }} ago</span>
                                         </div>
-                                 {% endif %}
-                            </li>
-                            {% else %}
-                            <li class="clearfix">
-                                {% if message_chat.created_at %}
-                                    <div class="message-data">
-                                        <span class="message-data-time">{{ message_chat.created_at|date_time_to_minute }} ago</span>
+                                    {% endif %}
+                                    <div class="message other-message float-right"> {{ message_chat.message }}
                                     </div>
-                                {% endif %}
-                                <div class="message my-message">{{ message_chat.message }}</div>
-                                 {% if message_chat.image %}
-                                        <div class="message-image">
-                                            <img src="{{ message_chat.image.url }}" alt="message image">
+                                     {% if message_chat.image %}
+                                            <div class="message-image">
+                                                <img src="{{ message_chat.image.url }}" alt="message image">
+                                            </div>
+                                     {% endif %}
+                                </li>
+                                {% else %}
+                                <li class="clearfix">
+                                    {% if message_chat.created_at %}
+                                        <div class="message-data">
+                                            <span class="message-data-time">{{ message_chat.created_at|date_time_to_minute }} ago</span>
                                         </div>
-                                 {% endif %}
-                            </li>
-                            {% endif %}
+                                    {% endif %}
+                                    <div class="message my-message">{{ message_chat.message }}</div>
+                                     {% if message_chat.image %}
+                                            <div class="message-image">
+                                                <img src="{{ message_chat.image.url }}" alt="message image">
+                                            </div>
+                                     {% endif %}
+                                </li>
+                                {% endif %}
                             {% endfor %}
                         </ul>
                     </div>

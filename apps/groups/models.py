@@ -12,8 +12,8 @@ from apps.general.enums.weeks import WeekDay
 
 class StudentGroup(models.Model):
     teacher = models.ForeignKey(settings.AUTH_USER_MODEL, limit_choices_to={'role': CustomUser.RoleChoices.TEACHER.value},
-                                on_delete=models.PROTECT, related_name='teacher_groups')
-    subject = models.ForeignKey('subjects.Subject', on_delete=models.PROTECT, related_name='subject_groups')
+                                on_delete=models.CASCADE, related_name='teacher_groups')
+    subject = models.ForeignKey('subjects.Subject', on_delete=models.CASCADE, related_name='subject_groups')
     start_time = models.TimeField()
     end_time = models.TimeField()
     week_day = ArrayField(base_field=models.PositiveSmallIntegerField(choices=WeekDay.choices))

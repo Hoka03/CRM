@@ -14,5 +14,5 @@ class SubjectAdmin(TranslationAdmin):
 
 @admin.register(Resource)
 class ResourceAdmin(admin.ModelAdmin):
-    list_display = ('subject', 'title', 'confirmed_by', 'url', 'published_at')
+    list_display = ('subject', 'book_name', 'confirmed_by', 'url', 'published_at', 'created_at')
     list_display_links = list_display

@@ -63,10 +63,10 @@ class ChatMessage(models.Model):
     sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
 
     message = models.CharField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    viewed_at = models.DateTimeField(blank=True, null=True)
     is_viewed = models.BooleanField(default=False)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    viewed_at = models.DateTimeField(blank=True, null=True)
 
     image = models.ImageField(upload_to='chat/', blank=True, null=True)
 

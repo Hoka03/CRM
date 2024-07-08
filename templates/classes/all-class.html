@@ -37,10 +37,10 @@
                         <input type="text" name="search_id" placeholder="Search by ID ..." class="form-control">
                     </div>
                     <div class="col-4-xxxl col-xl-4 col-lg-3 col-12 form-group">
-                        <input type="text" placeholder="Search by Name ..." class="form-control">
+                        <input type="text" name="search_name" placeholder="Search by Name ..." class="form-control">
                     </div>
                     <div class="col-4-xxxl col-xl-3 col-lg-3 col-12 form-group">
-                        <input type="text" placeholder="Search by Class ..." class="form-control">
+                        <input type="text" name="search_class" placeholder="Search by Class ..." class="form-control">
                     </div>
                     <div class="col-1-xxxl col-xl-2 col-lg-3 col-12 form-group">
                         <button type="submit" class="fw-btn-fill btn-gradient-yellow">SEARCH</button>
@@ -77,7 +77,7 @@
                             </div>
                         </td>
                         <td class="text-center"><img src="{% static 'img/figure/student2.png' %}" alt="student"></td>
-                        <td>{{ student_group.teacher }}</td>
+                        <td>{{ student_group.teacher.first_name }} - {{ student_group.teacher.last_name }}</td>
                         <td>{{ student_group.subject }}</td>
                         <td>{{ student_group.created_at }}</td>
                         <td>Start_time:{{ student_group.start_time }} - End_time{{ student_group.end_time }}</td>

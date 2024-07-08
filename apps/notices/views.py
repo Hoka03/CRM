@@ -45,7 +45,7 @@ class ChatListView(LoginRequiredMixin, ListView):
         }
         return render(request, self.template_name, context)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         chat_id = request.GET.get('chat_id')
         message = request.POST.get('message')
         image = request.FILES.get('image')

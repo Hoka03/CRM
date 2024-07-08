@@ -15,11 +15,12 @@ class Subject(models.Model):
 
 class Resource(models.Model):
     subject = models.ForeignKey('subjects.Subject', on_delete=models.PROTECT)
-    title = models.CharField(max_length=150)
+    book_name = models.CharField(max_length=150)
     confirmed_by = models.CharField(max_length=150, blank=True)
     url = models.URLField(max_length=150, blank=True, null=True)
     published_at = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.title
+        return self.book_name
 

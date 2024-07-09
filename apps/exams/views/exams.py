@@ -7,9 +7,10 @@ from apps.exams.models import Exam, ExamResult
 from apps.subjects.models import Subject
 
 
-class ExamScheduleListView(ListView):
+class ExamScheduleListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     template_name = 'exams/exam-schedule.html'
     context_object_name = 'exams'
+    permission_required = ('users.create_customuser',)
 
     def get_context_data(self, *args, object_list=None, **kwargs):
         context = super().get_context_data(object_list=None, **kwargs)
@@ -21,13 +22,13 @@ class ExamScheduleListView(ListView):
 
     def get_queryset(self):
         queryset = Exam.objects.all()
-        search_subject = self.request.GET.get('search_subject')
-        if search_subject:
-            queryset = queryset.filter(subject__name__icontains=search_subject)
+        search_id = self.request.GET.get('search_id')
+        if search_id:
+            queryset = queryset.filter(id__startswith=search_id)
 
-        search_created_at = self.request.GET.get('search_created_at')
-        if search_created_at:
-            queryset = queryset.filter(created_at__icontains=search_created_at)
+        search_name = self.request.GET.get('search_name')
+        if search_name:
+            queryset = queryset.filter(subject__name__icontains=search_name)
         return queryset
 
     def post(self, request):
@@ -56,5 +57,5 @@ class ExamEditView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 class ExamDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Exam
     template_name = 'exams/exam_delete.html'
-    permission_required = ('users.delete_customuser')
+    permission_required = ('users.delete_customuser',)
     success_url = reverse_lazy('exam_schedule')

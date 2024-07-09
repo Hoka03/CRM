@@ -17,12 +17,12 @@ class SubjectListView(ListView):
 
     def get_queryset(self):
         queryset = Subject.objects.all()
-
         search_id = self.request.GET.get('search_id')
+        search_name = self.request.GET.get('search_name')
+
         if search_id:
             queryset = queryset.filter(id__startswith=search_id)
 
-        search_name = self.request.GET.get('search_name')
         if search_name:
             queryset = queryset.filter(name__icontains=search_name)
 

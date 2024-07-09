@@ -60,10 +60,10 @@
                                 <form class="mg-b-20">
                                     <div class="row gutters-8">
                                          <div class="col-lg-3 col-12 form-group">
-                                            <input type="text" name="search_id" placeholder="Search by ID ..." class="form-control">
+                                            <input type="number" name="search_id" value="{{ request.GET.search_id }}" placeholder="Search by ID ..." class="form-control">
                                         </div>
                                         <div class="col-lg-3 col-12 form-group">
-                                            <input type="text" name="search_name" placeholder="Search by Subject Name ..." class="form-control">
+                                            <input type="text" name="search_name" value="{{ request.GET.search_name }}" placeholder="Search by Subject Name ..." class="form-control">
                                         </div>
 
                                         <div class="col-lg-2 col-12 form-group">

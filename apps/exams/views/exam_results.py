@@ -10,6 +10,7 @@ from apps.users.models import CustomUser
 
 class ExamGradesListView(ListView):
     template_name = 'exams/exam-grade.html'
+    model = ExamResult
     context_object_name = 'exam_results'
 
     def get_context_data(self, *args, object_list=None, **kwargs):
@@ -50,4 +51,12 @@ class ExamResultDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteVi
     model = ExamResult
     template_name = 'exams/exam_delete.html'
     permission_required = ('users.delete_customuser')
+    success_url = reverse_lazy('exam_grade')
+
+
+class ExamEditView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = ExamResult
+    fields = ['exam', 'grade_point', 'student', 'percent', 'comment']
+    template_name = 'exams/exam_edit.html'
+    permission_required = ('users.change_customuser')
     success_url = reverse_lazy('exam_grade')

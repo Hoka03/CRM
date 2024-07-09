@@ -37,7 +37,7 @@
                                 <label for="id_exam">Select Exam</label>
                                 <select id="id_exam" name="exam_id" class="select2 form-control" required>
                                     {% for exam in exams %}
-                                    <option value="{{ exam.id }}">{{ exam.subject }}</option>
+                                    <option value="{{ exam.id }}">{{ exam.subject.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -59,6 +59,7 @@
                                     <option value="3.50">3.50</option>
                                     <option value="3.00">3.00</option>
                                     <option value="2.50">2.50</option>
+                                    <option value="0">0</option>
                                 </select>
                             </div>
                             <div class="col-12-xxxl col-lg-6 col-12 form-group">
@@ -101,10 +102,10 @@
                     <form class="mg-b-20">
                         <div class="row gutters-8">
                             <div class="col-lg-5 col-sm-4 col-12 form-group">
-                                <input type="text" name="search_name" placeholder="Search by Grade Name ..." class="form-control">
+                                <input type="text" name="search_name" value="{{ request.GET.search_name }}" placeholder="Search by Grade Name ..." class="form-control">
                             </div>
                             <div class="col-lg-5 col-sm-5 col-12 form-group">
-                                <input type="text" name="search_percent" placeholder="Search by Percent ..." class="form-control">
+                                <input type="text" name="search_percent" value="{{ request.GET.search_percent }}" placeholder="Search by Percent ..." class="form-control">
                             </div>
                             <div class="col-lg-2 col-sm-3 col-12 form-group">
                                 <button type="submit"
@@ -153,7 +154,8 @@
                                             <a class="dropdown-item"
                                                href="{% url 'exam_result_delete' exam_result.pk %}"><i
                                                     class="fas fa-times text-orange-red"></i>Delete</a>
-                                            <a class="dropdown-item" href="#"><i
+                                            <a class="dropdown-item"
+                                               href="{% url 'exam_result_edit' exam_result.pk %}"><i
                                                     class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
                                         </div>
                                     </div>

@@ -36,7 +36,7 @@ class ParentListView(ListView):
 class ParentDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = CustomUser
     template_name = 'parents/parents-details.html'
-    context_object_name = 'teacher'
+    context_object_name = 'parent'
     permission_required = ('users.view_student',)
 
 

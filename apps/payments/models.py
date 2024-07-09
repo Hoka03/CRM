@@ -14,6 +14,7 @@ class Payment(models.Model):
     month = models.PositiveIntegerField(choices=MonthChoice.choices)
     salary = models.DecimalField(max_digits=20, decimal_places=2, help_text='Add in UZS')
     in_percent = models.PositiveSmallIntegerField(help_text='Before add in_percent, look at role.')
+    is_paid = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def clean(self):

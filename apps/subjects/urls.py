@@ -10,5 +10,6 @@ urlpatterns = [
     # ===================================== BOOKS ================================================
     path('all-book/', books.BookListView.as_view(), name='all_book_page'),
     path('add-book/', books.AddBookTemplateView.as_view(), name='add_book_page'),
-    path('edit-book/<int:pk>/', books.BookEditView.as_view(), name='book_edit')
+    path('edit-book/<int:pk>/', books.BookEditView.as_view(), name='book_edit'),
+    path('delete-book/<int:pk>/', books.BookDeleteView.as_view(), name='book_delete'),
 ]

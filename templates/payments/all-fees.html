@@ -1,0 +1,123 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{% load  static %}
+<div class="dashboard-content-one">
+    <!-- Breadcubs Area Start Here -->
+    <div class="breadcrumbs-area">
+        <h3>Payments</h3>
+        <ul>
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+            <li>Payments</li>
+        </ul>
+    </div>
+    <!-- Breadcubs Area End Here -->
+    <!-- Fees Table Area Start Here -->
+    <div class="card height-auto">
+        <div class="card-body">
+            <div class="heading-layout1">
+                <div class="item-title">
+                    <h3>All Payments</h3>
+                </div>
+            </div>
+            <form class="mg-b-20" method="GET" action="{% url 'pay_collection' %}">
+                {% csrf_token %}
+                <div class="row gutters-8">
+                    <div class="col-3-xxxl col-xl-3 col-lg-3 col-12 form-group">
+                        <input type="number" name="search_id" value="{{ request.GET.search_id }}" placeholder="Search by ID ..." class="form-control">
+                    </div>
+                    <div class="col-4-xxxl col-xl-4 col-lg-3 col-12 form-group">
+                        <input type="text" name="search_name" value="{{ request.GET.search_name }}" placeholder="Search by Name ..." class="form-control">
+                    </div>
+                    <div class="col-4-xxxl col-xl-3 col-lg-3 col-12 form-group">
+                        <input type="text" name="search_phone_number" value="{{ request.GET.search_phone_number }}" placeholder="Search by Phone" class="form-control">
+                    </div>
+                    <div class="col-1-xxxl col-xl-2 col-lg-3 col-12 form-group">
+                        <button type="submit" class="fw-btn-fill btn-gradient-yellow">SEARCH</button>
+                    </div>
+                </div>
+            </form>
+            <div class="table-responsive">
+                <table class="table data-table text-nowrap">
+                    <thead>
+                    <tr>
+                        <th>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input checkAll">
+                                <label class="form-check-label">ID</label>
+                            </div>
+                        </th>
+                        <th>Photo</th>
+                        <th>Name</th>
+                        <th>Gender</th>
+                        <th>Subject and Group</th>
+                        <th>Expense</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Year</th>
+                        <th>Month</th>
+                        <th>Phone</th>
+                        <th>E-mail</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for payment in payments %}
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input">
+                                <label class="form-check-label">#{{ payment.pk }}</label>
+                            </div>
+                        </td>
+                        <td><img src="{% static 'img/figure/student2.png' %}" alt="student"></td>
+                        {% if payment.teacher %}
+                            <td>{{ payment.teacher }}</td>
+                            <td>{{ payment.teacher.get_gender_display }}</td>
+                            <td>{% for i in payment.teacher.teacher_groups.distinct %} {{ i.subject }} {{ i }}<br> {% endfor %}</td>
+                            <td>{{ payment.salary }}</td>
+                            <td>{% widthratio payment.teacher.salary 1 payment.teacher.teacher_groups.distinct.count %} $</td>
+                            <td class="badge badge-pill badge-{{ payment.is_paid|yesno:'success,danger' }} d-block mg-t-8">{{ payment.is_paid|yesno:'Paid,Unpaid' }}</td>
+                            <td>{{ payment.year }}</td>
+                            <td>{{ payment.month }}</td>
+                            <td>{{ payment.teacher.phone_number }}</td>
+                            <td>{{ payment.teacher.email }}</td>
+                        {% else %}
+                            <td>{{ payment.student }}</td>
+                            <td>{{ payment.student.get_gender_display }}</td>
+                            <td>{{ payment.student.student_group.subject }} {{ payment.student.student_group }}</td>
+                            <td>{{ payment.salary }}</td>
+                            <td>{{ payment.student.student_group.subject.price }}</td>
+                            <td class="badge badge-pill badge-{{ payment.is_paid|yesno:'success,danger' }} d-block mg-t-8">{{ payment.is_paid|yesno:'Paid,Unpaid' }}</td>
+                            <td>{{ payment.year }}</td>
+                            <td>{{ payment.month }}</td>
+                            <td>{{ payment.student.phone_number }}</td>
+                            <td>{{ payment.student.email }}</td>
+                        {% endif %}
+                        <td>
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <span class="flaticon-more-button-of-three-dots"></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="{% url 'payment_delete' payment.pk %}">
+                                        <i class="fas fa-times text-orange-red"></i>Delete</a>
+                                    <a class="dropdown-item" href="{% url 'payment_edit' payment.pk %}">
+                                        <i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Fees Table Area End Here -->
+</div>
+</div>
+<!-- Page Area End Here -->
+</div>
+{% endblock %}

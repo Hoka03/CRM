@@ -80,7 +80,7 @@
                         <td>{{ student_group.teacher.first_name }} - {{ student_group.teacher.last_name }}</td>
                         <td>{{ student_group.subject }}</td>
                         <td>{{ student_group.created_at }}</td>
-                        <td>Start_time:{{ student_group.start_time }} - End_time{{ student_group.end_time }}</td>
+                        <td>Start_time:{{ student_group.start_time }} - End_time:{{ student_group.end_time }}</td>
                         <td>{{ student_group.teacher.phone_number }}</td>
                         <td>{{ student_group.teacher.email }}</td>
                         <td>
@@ -89,9 +89,10 @@
                                     <span class="flaticon-more-button-of-three-dots"></span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
-                                    <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
-                                    <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                                    <a class="dropdown-item" href="{% url 'student_group_delete' student_group.pk %}">
+                                        <i class="fas fa-times text-orange-red"></i>Delete</a>
+                                    <a class="dropdown-item" href="{% url 'student_group_edit' student_group.pk %}">
+                                        <i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
                                 </div>
                             </div>
                         </td>

@@ -34,7 +34,7 @@
                         </div>
                         <div class="single-info-details">
                             <div class="item-img">
-                                <img src="img/figure/parents.jpg" alt="student">
+                                <img src="{% static 'img/figure/parents.jpg' %}" alt="student">
                             </div>
                             <div class="item-content">
                                 <div class="header-inline item-header">
@@ -47,7 +47,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <p>parent.description</p>
+                                <p>{{ parent.description }}</p>
                                 <div class="info-table table-responsive">
                                     <table class="table text-nowrap">
                                         <tbody>
